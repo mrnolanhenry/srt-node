@@ -35,53 +35,15 @@ const offsetData = (dataArr, offset) => {
       newLine = getNewLineWithOffset(line, offset);
     }
     else if (isLineNumber(removeReturnFromLine(line))) {
-      newLine = lineNumber + "\r";
-      lineNumber++;
-      if (lineNumber > lineNumberToStartOffset) {
-        startOffset = true;
+        newLine = lineNumber + "\r";
+        lineNumber++;
+        if (lineNumber > lineNumberToStartOffset) {
+          startOffset = true;
+        }
       }
-    }
-    else {
-      // line is actual subtitle or dialogue
-      if (!process.argv[4]) {
-        // by default, will scrub lines of bits like "[chuckles]" or "(gasps)"
-        newLine = scrubNonDialogue(newLine, "(",")");
-        newLine = scrubNonDialogue(newLine, "[","]");
-        newLine = scrubNonDialogue(newLine, "[","] ");
-      }
-      array.push(newLine);
-    }
+    array.push(newLine);
   });
   return array.join("\n");
-}
-
-//WIP!!
-const scrubNonDialogue = (line, startChar, endChar) => {
-  let newLine = line;
-  const startSearch = line.indexOf(startChar);
-  const endSearch = line.indexOf(endChar);
-  if (startSearch == 0) {
-    if (endSearch !=-1) {
-      newLine = newLine.substring(endSearch + 2, newLine.length);
-    }
-    else {
-      newLine = "";
-    }
-  }
-  else if (startSearch != -1) {
-    if (endSearch !=-1) {
-      newLine = newLine.substring(0, startSearch) + newLine.substring(endSearch + 2, newLine.length);
-    }
-    else {
-      newLine = newLine.substring(0, startSearch);
-    }
-  }
-  else if (startSearch == -1) {
-    if (endSearch !=-1) {
-      newLine = newLine.substring(endSearch + 2, newLine.length);
-    }
-  }
-  return newLine;
 }
 
 const isLineNumber = (line) => {

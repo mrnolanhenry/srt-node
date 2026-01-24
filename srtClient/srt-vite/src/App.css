@@ -29,3 +29,11 @@
 .padded-column {
   padding: 0rem 2rem 0rem 2rem;
 }
+
+input[type=number][size="2"] {
+   width: 3rem; 
+}
+
+input[type=number][size="3"] {
+   width: 4rem; 
+}

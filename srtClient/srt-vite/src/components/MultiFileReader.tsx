@@ -4,11 +4,16 @@ import type { FileContent } from '../interfaces/FileContent';
 
 interface MultiFileReaderProps {
   fileContents: FileContent[];
+  handleTextChange?: (event: BaseSyntheticEvent) => void;
   setFileContents: React.Dispatch<React.SetStateAction<FileContent[]>>;
+  // setTextInputs?: React.Dispatch<React.SetStateAction<string[]>>;
+  textInputs?: string[];
 }
 
-const MultiFileReader = ({ fileContents, setFileContents }: MultiFileReaderProps) => {
+const MultiFileReader = ({ fileContents, handleTextChange, setFileContents, textInputs }: MultiFileReaderProps) => {
   // const [fileContents, setFileContents] = useState<FileContent[]>([]);
+  console.log("MultiFileReader textInputs:");
+  console.log(textInputs);
 
   const handleFileChange = (event: BaseSyntheticEvent) => {
     const files = event.target.files as FileList;
@@ -41,22 +46,26 @@ const MultiFileReader = ({ fileContents, setFileContents }: MultiFileReaderProps
     <>
       <div className="flex-column padded-column">
         <input multiple type="file" id="srtInputFile" name="srtInputFile" accept=".srt, .txt" onChange={handleFileChange} />
-        <h3>Selected Files:</h3>
         {fileContents.length > 0 ? (
-          <ul>
-            {fileContents.map((file, index) => (
-              <>
-                <textarea id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
-                {/* <li key={index}> */}
-                  {/* <strong>{file.name}:</strong>  */}
-                  {/* Display a snippet of the content */}
-                  {/* <p>{file.content && (file.content as string).substring(0, 100)}...</p> */}
-                {/* </li> */}
-              </>
-            ))}
-          </ul>
+          <>
+            <h3>Uploaded Files:</h3>
+            <ul>
+              {fileContents.map((file, index) => (
+                <>
+                  <textarea key={index} id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
+                  {/* <li key={index}> */}
+                    {/* <strong>{file.name}:</strong>  */}
+                    {/* Display a snippet of the content */}
+                    {/* <p>{file.content && (file.content as string).substring(0, 100)}...</p> */}
+                  {/* </li> */}
+                </>
+              ))}
+            </ul>
+          </>
         ) : (
-          <p>No files selected yet.</p>
+          <>
+             <p>No files selected yet.</p>
+          </>
         )}
       </div>
     </>

@@ -34,6 +34,14 @@
   justify-content: center;
 }
 
+.centered-row {
+  justify-content: center;
+}
+
+p {
+  margin: 8px 0;
+}
+
 small {
   font-size: 11px;
 }

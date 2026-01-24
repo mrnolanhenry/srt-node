@@ -13,29 +13,11 @@ function App() {
   const [secondsInput, setSecondsInput] = useState<number>(0);
   const [millisecondsInput, setMillisecondsInput] = useState<number>(0);
 
-  let fileInputsX: string[] = [];
-
   useEffect(() => {
     // console.log('useEffect - fileInputs changed:');
     // console.log(fileInputs);
     setTextInputs(fileInputs);
   }, [fileInputs]);
-
-  const onloadReader = (evt: ProgressEvent<FileReader>, index: number) => {
-    console.log("onloadReader evt:");
-    console.log(evt);
-    console.log("onloadReader index:");
-    console.log(index);
-    console.log("onloadReader fileInputs:");
-    console.log(fileInputs);
-    if (evt.target) {
-      const newFileInputs = [...fileInputsX];
-      newFileInputs[index] = evt.target.result as string;
-      console.log("onloadReader newFileInputs:");
-      console.log(newFileInputs);
-      setFileInputs(newFileInputs);
-    }
-  };
 
   const handleTextChange = (event: any) => {
     console.log("handleTextChange event");
@@ -47,7 +29,12 @@ function App() {
 
     const handleHoursChange = (event: any) => {
     if (event.target.validity.valid) {
-      
+      if (!isNaN(event.target.valueAsNumber)) {
+        setHoursInput(event.target.valueAsNumber);
+      }
+      else {
+        setHoursInput(0);
+      }
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -56,25 +43,40 @@ function App() {
 
   const handleMinutesChange = (event: any) => {
     if (event.target.validity.valid) {
-      
+      if (!isNaN(event.target.valueAsNumber)) {
+        setMinutesInput(event.target.valueAsNumber);
+      }
+      else {
+        setMinutesInput(0);
+      }
     }
     else {
       console.log("TODO: Handle Invalid number input later");
     }
   }
 
-    const handleSecondsChange = (event: any) => {
+  const handleSecondsChange = (event: any) => {
     if (event.target.validity.valid) {
-      
+      if (!isNaN(event.target.valueAsNumber)) {
+        setSecondsInput(event.target.valueAsNumber);
+      }
+      else {
+        setSecondsInput(0);
+      }
     }
     else {
       console.log("TODO: Handle Invalid number input later");
     }
   }
 
-    const handleMillisecondsChange = (event: any) => {
+  const handleMillisecondsChange = (event: any) => {
     if (event.target.validity.valid) {
-      
+      if (!isNaN(event.target.valueAsNumber)) {
+        setMillisecondsInput(event.target.valueAsNumber);
+      }
+      else {
+        setMillisecondsInput(0);
+      }
     }
     else {
       console.log("TODO: Handle Invalid number input later");

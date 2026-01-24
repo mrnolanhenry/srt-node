@@ -1,13 +1,18 @@
 import { useEffect, useState, type BaseSyntheticEvent } from 'react';
 import './App.css';
+import MultiFileReader from './components/MultiFileReader';
+import type { FileContent } from './interfaces/FileContent';
 
 function App() {
   const [fileInputs, setFileInputs] = useState<string[]>([]);
   const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your SRT files here.']);
+  const [fileContents, setFileContents] = useState<FileContent[]>([]);
+
+  let fileInputsX: string[] = [];
 
   useEffect(() => {
-    console.log('useEffect - fileInputs changed:');
-    console.log(fileInputs);
+    // console.log('useEffect - fileInputs changed:');
+    // console.log(fileInputs);
     setTextInputs(fileInputs);
   }, [fileInputs]);
 
@@ -19,7 +24,7 @@ function App() {
     console.log("onloadReader fileInputs:");
     console.log(fileInputs);
     if (evt.target) {
-      const newFileInputs = [...fileInputs];
+      const newFileInputs = [...fileInputsX];
       newFileInputs[index] = evt.target.result as string;
       console.log("onloadReader newFileInputs:");
       console.log(newFileInputs);
@@ -31,6 +36,7 @@ function App() {
     // console.log("handleFileChange event");
     // console.log(event);
     setFileInputs([]); // Clear existing file inputs
+    fileInputsX = [];
 
     if (event.target.files) {
       const targetFiles = [...event.target.files];
@@ -62,10 +68,14 @@ function App() {
   return (
     <>
       <div className="flex-wrapper">
-        <div className="flex-column padded-column">
-            <input multiple type="file" id="srtInputFile" name="srtInputFile" accept=".srt, .txt" onChange={handleFileChange} />
-            <textarea id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={50} onChange={handleTextChange} value={textInputs[0]}></textarea>
-        </div>
+        <MultiFileReader 
+          fileContents={fileContents} 
+          setFileContents={setFileContents} 
+        />
+        {/* <div className="flex-column padded-column"> */}
+            {/* <input multiple type="file" id="srtInputFile" name="srtInputFile" accept=".srt, .txt" onChange={handleFileChange} /> */}
+            {/* <textarea id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={50} onChange={handleTextChange} value={textInputs[0]}></textarea> */}
+        {/* </div> */}
         <div className="flex-column padded-column">
             <button id="btnConvert" onClick={() => {}}>Convert</button>
         </div>

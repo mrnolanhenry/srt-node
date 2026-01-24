@@ -30,6 +30,18 @@
   padding: 0rem 2rem 0rem 2rem;
 }
 
+.centered-column {
+  justify-content: center;
+}
+
+small {
+  font-size: 11px;
+}
+
+input[type=number] {
+   min-height: 20px; 
+}
+
 input[type=number][size="2"] {
    width: 3rem; 
 }

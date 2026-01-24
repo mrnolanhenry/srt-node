@@ -7,33 +7,19 @@ abstract class TimeUtils {
     remainingMillisecs = remainingMillisecs - (mins * 60 * 1000);
     const secs = Math.floor(remainingMillisecs/(1000));
     remainingMillisecs = remainingMillisecs - (secs * 1000);
-    const hrsString = this.formatHrMinSec(hrs);
-    const minsString = this.formatHrMinSec(mins);
-    const secsString = this.formatHrMinSec(secs);
-    const millisecsString = this.formatMillisec(remainingMillisecs);
-    const timeString =  hrsString + ":" + minsString + ":" + secsString + "," + millisecsString;
-    return timeString;
+    return this.formatHrMinSecMilliseconds(hrs, mins, secs, remainingMillisecs);
+  };
+
+  static formatHrMinSecMilliseconds(hrs: number, mins: number, secs: number, millisecs: number): string {
+    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')},${millisecs.toString().padStart(3, '0')}`;
   };
   
-  static formatHrMinSec(numberToFormat: number): string {
-    const string = numberToFormat.toString();
-    let newString = string;
-    if (string.length < 2) {
-      newString = "0" + newString;
-    }
-    return newString;
+  static formatHrMinOrSec(numberToFormat: number): string {
+    return numberToFormat.toString().padStart(2, '0');
   };
   
-  static formatMillisec(numberToFormat: number): string {
-    const string = numberToFormat.toString();
-    let newString = string;
-    if (string.length < 3) {
-      if (string.length < 2) {
-        newString = "0" + newString;
-      }
-      newString = "0" + newString;
-    }
-    return newString;
+  static formatMillisecs(millisecs: number): string {
+    return millisecs.toString().padStart(3, '0')
   };
   
   static convertStringToMillisecs(timeString: string): number | undefined {

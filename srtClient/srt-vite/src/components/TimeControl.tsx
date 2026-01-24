@@ -15,7 +15,6 @@ interface TimeControlProps {
 
 const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, lineStartInput, timeInputString, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
 
-
   return (
     <>
       <div className="flex-column">

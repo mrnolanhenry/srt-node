@@ -1,0 +1,31 @@
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.flex-wrapper {
+  display: flex; /* Makes this div a flex container */
+  flex-direction: row; /* Aligns children horizontally (default) */
+  justify-content: space-around; /* Distributes space around items along the main axis */
+  align-items: center; /* Centers items along the cross axis (vertically in this case) */
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.padded-column {
+  padding: 0rem 2rem 0rem 2rem;
+}

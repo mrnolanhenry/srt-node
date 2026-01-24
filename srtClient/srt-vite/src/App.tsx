@@ -123,24 +123,13 @@ function App() {
 
   const downloadTextFile = (file: FileContent) => {
     const { name, content } = file;
-    // 1. Create a Blob object with the file content and type
     const blob = new Blob([content as BlobPart], { type: 'text/plain;charset=utf-8' });
-
-    // 2. Create an object URL for the Blob
     const url = URL.createObjectURL(blob);
-
-    // 3. Create a temporary anchor element
     const link = document.createElement('a');
     link.href = url;
-    link.download = name; // Set the default file name
-
-    // 4. Append the link to the body (necessary for the click event to work in some browsers)
+    link.download = name;
     document.body.appendChild(link);
-
-    // 5. Programmatically click the link to trigger the download
     link.click();
-
-    // 6. Clean up by removing the link and revoking the object URL
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 }
@@ -183,7 +172,7 @@ function App() {
         </div>
         <div className="flex-column padded-column">
           <textarea id="srtOutput" name="srtOutput" rows={12} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
-          <button id="btnConvert" onClick={handleDownload}>Download</button>
+          <button id="btnDownload" onClick={handleDownload}>Download</button>
         </div>
       </div>
     </>

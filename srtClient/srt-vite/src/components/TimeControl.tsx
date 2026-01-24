@@ -5,13 +5,14 @@ interface TimeControlProps {
   minutesInput: number;
   secondsInput: number;
   millisecondsInput: number;
+  lineStartInput: number;
   handleHoursChange: (event: any) => void;
   handleMinutesChange: (event: any) => void;
   handleSecondsChange: (event: any) => void;
   handleMillisecondsChange: (event: any) => void;
 }
 
-const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
+const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, lineStartInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
 
   const timeInputString = `${hoursInput.toString().padStart(2, '0')}:${minutesInput.toString().padStart(2, '0')}:${secondsInput.toString().padStart(2, '0')},${millisecondsInput.toString().padStart(3, '0')}`;
 
@@ -57,7 +58,7 @@ const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput
         </div>
         <div className="flex-row centered-row">
           <div className="flex-column">
-            <p>Selected Time:</p>
+            <p>Selected New Time for Line {lineStartInput}:</p>
             <p>{timeInputString}</p>
           </div>
         </div>

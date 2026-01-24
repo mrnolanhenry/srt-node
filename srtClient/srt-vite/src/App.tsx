@@ -3,6 +3,7 @@ import './App.css';
 import MultiFileReader from './components/MultiFileReader';
 import type { FileContent } from './interfaces/FileContent';
 import TimeControl from './components/TimeControl';
+import LineNumberControl from './components/LineNumberControl';
 
 function App() {
   const [fileInputs, setFileInputs] = useState<string[]>([]);
@@ -12,6 +13,8 @@ function App() {
   const [minutesInput, setMinutesInput] = useState<number>(0);
   const [secondsInput, setSecondsInput] = useState<number>(0);
   const [millisecondsInput, setMillisecondsInput] = useState<number>(0);
+  const [lineStartInput, setLineStartInput] = useState<number>(1);
+  const [lineEndInput, setLineEndInput] = useState<number | null>(null);
 
   useEffect(() => {
     // console.log('useEffect - fileInputs changed:');
@@ -83,6 +86,28 @@ function App() {
     }
   }
 
+  const handleLineStartInputChange = (event: any) => {
+    if (event.target.validity.valid) {
+      if (!isNaN(event.target.valueAsNumber)) {
+        setLineStartInput(event.target.valueAsNumber);
+      }
+      else {
+        setLineStartInput(1);
+      }
+    }
+    else {
+      console.log("TODO: Handle Invalid number input later");
+    }
+  }
+
+  const handleLineEndInputChange = (event: any) => {
+    if (event.target.validity.valid) {
+      setLineEndInput(event.target.valueAsNumber);
+    }
+    else {
+      console.log("TODO: Handle Invalid number input later");
+    }
+  }
 
   return (
     <>
@@ -97,12 +122,21 @@ function App() {
             <textarea id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={40} onChange={handleTextChange} value={textInputs[0]}></textarea>
         </div>
         <div className="flex-column padded-column">
+          <div className="flex-row centered-row">
+            <LineNumberControl 
+              lineStartInput={lineStartInput}
+              lineEndInput={lineEndInput}
+              handleLineStartInputChange={handleLineStartInputChange}
+              handleLineEndInputChange={handleLineEndInputChange}
+            />
+          </div>
           <div className="flex-row">
             <TimeControl 
               hoursInput={hoursInput}
               minutesInput={minutesInput}
               secondsInput={secondsInput}
               millisecondsInput={millisecondsInput}
+              lineStartInput={lineStartInput}
               handleHoursChange={handleHoursChange}
               handleMinutesChange={handleMinutesChange}
               handleSecondsChange={handleSecondsChange}

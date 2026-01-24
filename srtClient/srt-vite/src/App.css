@@ -9,7 +9,7 @@
   display: flex; /* Makes this div a flex container */
   flex-direction: row; /* Aligns children horizontally (default) */
   justify-content: space-around; /* Distributes space around items along the main axis */
-  align-items: center; /* Centers items along the cross axis (vertically in this case) */
+  /* align-items: center; /* Centers items along the cross axis (vertically in this case) */
 }
 
 .flex-column {
@@ -30,12 +30,25 @@
   padding: 0rem 2rem 0rem 2rem;
 }
 
+.padded-row {
+  padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
+.spaced-between-row {
+  justify-content: space-between;
+}
+
 .centered-column {
   justify-content: center;
 }
 
 .centered-row {
   justify-content: center;
+  align-items: center;
+}
+
+.align-start-column {
+  align-items: flex-start;
 }
 
 p {
@@ -56,4 +69,8 @@ input[type=number][size="2"] {
 
 input[type=number][size="3"] {
    width: 4rem; 
+}
+
+input[type=number][size="5"] {
+   width: 5rem; 
 }

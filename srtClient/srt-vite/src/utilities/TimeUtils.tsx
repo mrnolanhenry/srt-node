@@ -92,19 +92,19 @@ abstract class TimeUtils {
     return true;
   };
 
-  static isValidTime = (timeArr: string[]): boolean => {
+  static isValidTime(timeArr: string[]): boolean {
     return this.isValidTimeInMillisecs(timeArr) || this.isValidTimeInFps(timeArr);
   };
 
-  static isValidHrMinSec = (stringToCheck: string): boolean => {
+  static isValidHrMinSec(stringToCheck: string): boolean {
     return !isNaN(parseInt(stringToCheck)) && stringToCheck.length === 2;
   };
 
-  static isValidMilliSec = (stringToCheck: string): boolean => {
+  static isValidMilliSec(stringToCheck: string): boolean {
     return !isNaN(parseInt(stringToCheck)) && stringToCheck.length === 3;
   };
 
-  static isValidFps = (stringToCheck: string): boolean => {
+  static isValidFps(stringToCheck: string): boolean {
     return !isNaN(parseInt(stringToCheck)) && stringToCheck.length === 2;
   };
 };

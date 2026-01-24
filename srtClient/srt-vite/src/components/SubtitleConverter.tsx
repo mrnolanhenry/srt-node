@@ -1,3 +1,4 @@
+import StringUtils from "../utilities/StringUtils";
 import TimeUtils from "../utilities/TimeUtils";
 
 interface SubtitleConverterProps {
@@ -30,7 +31,7 @@ const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogu
       if (line.includes(" --> ") && startOffset) {
         newLine = getNewLineWithOffset(line, offset);
       }
-      else if (isLineNumber(removeReturnFromLine(line))) {
+      else if (StringUtils.isLineNumber(StringUtils.removeReturnCharacter(line))) {
         // newLine = lineNumber + "\r";
         newLine = lineNumber.toString();
         lineNumber++;
@@ -81,12 +82,8 @@ const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogu
     return newLine;
   };
   
-  const isLineNumber = (line: string) => {
-    return !isNaN(Number(line)) && !isNaN(parseInt(line)) && line.indexOf(".") !== line.length - 1;
-  };
-  
   const getNewLineWithOffset = (line: string, offset: number) => {
-    let lineWithReturnRemoved = removeReturnFromLine(line);
+    let lineWithReturnRemoved = StringUtils.removeReturnCharacter(line);
     const {startTimeString, endTimeString} = getStartAndEndString(lineWithReturnRemoved);
     const newStartTime = TimeUtils.convertStringToMillisecs(startTimeString) as number + offset;
     const newEndTime = TimeUtils.convertStringToMillisecs(endTimeString) as number + offset;
@@ -115,14 +112,6 @@ const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogu
     return newInitialTime - oldInitialTime;
   };
   
-  const removeReturnFromLine = (line: string) => {
-    const indexOfReturn = line.indexOf("\r");
-    if (indexOfReturn === -1) {
-      return line;
-    }
-    return line.substring(0,line.indexOf("\r"));
-  };
-  
   const getStartAndEndString = (lineString: string) => {
     const lineArr = lineString.split(" --> ");
     const startTimeString = lineArr[0];
@@ -145,11 +134,11 @@ const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogu
       }
       console.log("getFirstTimeLineToOffset array[index - 1]");
       console.log(array[index - 1]);
-      let prevLine = removeReturnFromLine(array[index - 1]);
+      let prevLine = StringUtils.removeReturnCharacter(array[index - 1]);
       console.log("getFirstTimeLineToOffset prevLine");
       console.log(prevLine);
       console.log("------------------------------------------------------------------");
-      return isLineNumber(prevLine) && (Number(prevLine) >= lineNumberToStartOffset) && line.includes(" --> ");
+      return StringUtils.isLineNumber(prevLine) && (Number(prevLine) >= lineNumberToStartOffset) && line.includes(" --> ");
     });
   };
   

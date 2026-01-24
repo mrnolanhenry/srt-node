@@ -1,19 +1,16 @@
+import TimeUtils from '../utilities/TimeUtils';
 import './TimeControl.css';
 
 interface TimeControlProps {
-  hoursInput: number;
-  minutesInput: number;
-  secondsInput: number;
-  millisecondsInput: number;
   lineStartInput: number;
-  timeInputString: string;
+  timeInput: Date;
   handleHoursChange: (event: any) => void;
   handleMinutesChange: (event: any) => void;
   handleSecondsChange: (event: any) => void;
   handleMillisecondsChange: (event: any) => void;
 }
 
-const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, lineStartInput, timeInputString, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
+const TimeControl = ({ timeInput, lineStartInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
 
   return (
     <>
@@ -24,7 +21,7 @@ const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput
               <small>Hours</small>
             </div>
             <div className="flex-row">
-              <input type="number" id="hoursInput" name="hoursInput" min={0} max={99} step={1} size={2} onChange={handleHoursChange} value={hoursInput} />
+              <input type="number" id="hoursInput" name="hoursInput" min={0} max={99} step={1} size={2} onChange={handleHoursChange} value={timeInput.getUTCHours()} />
               <span className="time-separator"> : </span>
             </div>
           </div>
@@ -33,7 +30,7 @@ const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput
               <small>Minutes</small>
             </div>
             <div className="flex-row">
-              <input type="number" id="minutesInput" name="minutesInput" min={0} max={99} step={1} size={2} onChange={handleMinutesChange} value={minutesInput} />
+              <input type="number" id="minutesInput" name="minutesInput" min={0} max={99} step={1} size={2} onChange={handleMinutesChange} value={timeInput.getUTCMinutes()} />
               <span className="time-separator"> : </span>
             </div>
           </div>
@@ -42,7 +39,7 @@ const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput
               <small>Seconds</small>
             </div>
             <div className="flex-row">
-              <input type="number" id="secondsInput" name="secondsInput" min={0} max={99} step={1} size={2} onChange={handleSecondsChange} value={secondsInput} />
+              <input type="number" id="secondsInput" name="secondsInput" min={0} max={99} step={1} size={2} onChange={handleSecondsChange} value={timeInput.getUTCSeconds()} />
               <span className="time-separator"> , </span>
             </div>
           </div>
@@ -51,14 +48,14 @@ const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput
               <small>Milliseconds</small>
             </div>
             <div className="flex-row">
-              <input type="number" id="millisecondsInput" name="millisecondsInput" min={0} max={999} step={1} size={3} onChange={handleMillisecondsChange} value={millisecondsInput} />
+              <input type="number" id="millisecondsInput" name="millisecondsInput" min={0} max={999} step={1} size={3} onChange={handleMillisecondsChange} value={timeInput.getUTCMilliseconds()} />
             </div>
           </div>
         </div>
         <div className="flex-row centered-row">
           <div className="flex-column">
             <p>Selected New Time for Line {lineStartInput}:</p>
-            <p>{timeInputString}</p>
+            <p>{TimeUtils.getDisplayTime(timeInput)}</p>
           </div>
         </div>
       </div>

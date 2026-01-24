@@ -24,7 +24,7 @@ const LineNumberControl = ({ lineStartInput, lineEndInput, handleLineStartInputC
             <small>{`(leave blank to convert to end)`}</small>
           </div>        
           <div className="flex-column centered-column">
-            <input type="number" id="lineEndInput" className="line-input" name="lineEndInput" step={1} size={5} onChange={handleLineEndInputChange} value={lineEndInput as number} /> 
+            <input type="number" id="lineEndInput" className="line-input" name="lineEndInput" step={1} size={5} onChange={handleLineEndInputChange} value={lineEndInput as number ?? ""} /> 
           </div>
         </div>
       </div>

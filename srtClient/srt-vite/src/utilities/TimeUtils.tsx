@@ -1,4 +1,24 @@
 abstract class TimeUtils { 
+  static getNewTime(hrs: number, mins: number, secs: number, millisecs: number): Date {
+    return new Date(Date.UTC(1970, 0, 1, hrs, mins, secs, millisecs)); // Year, Month (0-indexed), Day, Hour, Minute, Second, Millisecond
+  }
+
+  static getNewTimeWithHours(dateTime: Date, hrs: number) { 
+    return new Date(TimeUtils.getNewTime(hrs, dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds()));
+  }
+
+  static getNewTimeWithMinutes(dateTime: Date, mins: number) { 
+    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), mins, dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds()));
+  }
+
+  static getNewTimeWithSeconds(dateTime: Date, secs: number) { 
+    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), dateTime.getUTCMinutes(), secs, dateTime.getUTCMilliseconds()));
+  }
+
+  static getNewTimeWithMilliseconds(dateTime: Date, millisecs: number) { 
+    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), millisecs));
+  }
+
   static convertMillisecsToString(totalMilliSecs: number): string {
     let remainingMillisecs = totalMilliSecs;
     const hrs = Math.floor(remainingMillisecs/(60 * 60 * 1000));
@@ -8,6 +28,10 @@ abstract class TimeUtils {
     const secs = Math.floor(remainingMillisecs/(1000));
     remainingMillisecs = remainingMillisecs - (secs * 1000);
     return this.formatHrMinSecMilliseconds(hrs, mins, secs, remainingMillisecs);
+  };
+
+  static getDisplayTime(dateTime:Date): string {
+    return this.formatHrMinSecMilliseconds(dateTime.getUTCHours(), dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds());
   };
 
   static formatHrMinSecMilliseconds(hrs: number, mins: number, secs: number, millisecs: number): string {
@@ -69,10 +93,7 @@ abstract class TimeUtils {
   };
   
   static isValidTimeInFps(timeArr: string[]): boolean {
-    if (timeArr.length !== 4 || !this.isValidHrMinSec(timeArr[0]) || !this.isValidHrMinSec(timeArr[1]) || !this.isValidHrMinSec(timeArr[2])) {
-      return false;
-    }
-    if(!this.isValidFps(timeArr[3])) {
+    if (timeArr.length !== 4 || !this.isValidHrMinSec(timeArr[0]) || !this.isValidHrMinSec(timeArr[1]) || !this.isValidHrMinSec(timeArr[2]) || !this.isValidFps(timeArr[3])) {
       return false;
     }
     return true;

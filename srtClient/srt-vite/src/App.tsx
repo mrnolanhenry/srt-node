@@ -5,23 +5,18 @@ import type { FileContent } from './interfaces/FileContent';
 import TimeControl from './components/TimeControl';
 import LineNumberControl from './components/LineNumberControl';
 import SubtitleConverter from './components/SubtitleConverter';
+import TimeUtils from './utilities/TimeUtils';
 
 function App() {
   const [fileInputs, setFileInputs] = useState<string[]>([]);
   const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your SRT files here.']);
   const [textOutput, setTextOutput] = useState<string>('Your converted SRT file will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
-  const [hoursInput, setHoursInput] = useState<number>(0);
-  const [minutesInput, setMinutesInput] = useState<number>(0);
-  const [secondsInput, setSecondsInput] = useState<number>(0);
-  const [millisecondsInput, setMillisecondsInput] = useState<number>(0);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
   const [lineEndInput, setLineEndInput] = useState<number | null>(null);
+  const [timeInput, setTimeInput] = useState<Date>(TimeUtils.getNewTime(0, 0, 0, 0));
 
   const shouldScrubNonDialogue = false;
-
-  const timeInputString = `${hoursInput.toString().padStart(2, '0')}:${minutesInput.toString().padStart(2, '0')}:${secondsInput.toString().padStart(2, '0')},${millisecondsInput.toString().padStart(3, '0')}`;
-
 
   useEffect(() => {
     // console.log('useEffect - fileInputs changed:');
@@ -41,12 +36,10 @@ function App() {
 
   const handleHoursChange = (event: any) => {
     if (event.target.validity.valid) {
-      if (!isNaN(event.target.valueAsNumber)) {
-        setHoursInput(event.target.valueAsNumber);
-      }
-      else {
-        setHoursInput(0);
-      }
+      const validNumber = !isNaN(event.target.valueAsNumber) ? event.target.valueAsNumber : 0;
+      const newTimeInput = TimeUtils.getNewTimeWithHours(timeInput, validNumber);
+      setTimeInput(newTimeInput);
+
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -55,12 +48,9 @@ function App() {
 
   const handleMinutesChange = (event: any) => {
     if (event.target.validity.valid) {
-      if (!isNaN(event.target.valueAsNumber)) {
-        setMinutesInput(event.target.valueAsNumber);
-      }
-      else {
-        setMinutesInput(0);
-      }
+      const validNumber = !isNaN(event.target.valueAsNumber) ? event.target.valueAsNumber : 0;
+      const newTimeInput = TimeUtils.getNewTimeWithMinutes(timeInput, validNumber);
+      setTimeInput(newTimeInput);
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -69,12 +59,9 @@ function App() {
 
   const handleSecondsChange = (event: any) => {
     if (event.target.validity.valid) {
-      if (!isNaN(event.target.valueAsNumber)) {
-        setSecondsInput(event.target.valueAsNumber);
-      }
-      else {
-        setSecondsInput(0);
-      }
+      const validNumber = !isNaN(event.target.valueAsNumber) ? event.target.valueAsNumber : 0;
+      const newTimeInput = TimeUtils.getNewTimeWithSeconds(timeInput, validNumber);
+      setTimeInput(newTimeInput);
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -83,12 +70,9 @@ function App() {
 
   const handleMillisecondsChange = (event: any) => {
     if (event.target.validity.valid) {
-      if (!isNaN(event.target.valueAsNumber)) {
-        setMillisecondsInput(event.target.valueAsNumber);
-      }
-      else {
-        setMillisecondsInput(0);
-      }
+      const validNumber = !isNaN(event.target.valueAsNumber) ? event.target.valueAsNumber : 0;
+      const newTimeInput = TimeUtils.getNewTimeWithMilliseconds(timeInput, validNumber);
+      setTimeInput(newTimeInput);
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -159,12 +143,8 @@ function App() {
           </div>
           <div className="flex-row">
             <TimeControl 
-              hoursInput={hoursInput}
-              minutesInput={minutesInput}
-              secondsInput={secondsInput}
-              millisecondsInput={millisecondsInput}
+              timeInput={timeInput}
               lineStartInput={lineStartInput}
-              timeInputString={timeInputString}
               handleHoursChange={handleHoursChange}
               handleMinutesChange={handleMinutesChange}
               handleSecondsChange={handleSecondsChange}
@@ -175,7 +155,7 @@ function App() {
             lineStartInput={lineStartInput}
             lineEndInput={lineEndInput}
             shouldScrubNonDialogue={shouldScrubNonDialogue}
-            timeInputString={timeInputString}
+            timeInputString={TimeUtils.getDisplayTime(timeInput)}
             textInput={textInputs[0]}
             handleConvertCallback={setTextOutput}
           />

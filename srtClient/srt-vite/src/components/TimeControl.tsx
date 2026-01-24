@@ -6,15 +6,15 @@ interface TimeControlProps {
   secondsInput: number;
   millisecondsInput: number;
   lineStartInput: number;
+  timeInputString: string;
   handleHoursChange: (event: any) => void;
   handleMinutesChange: (event: any) => void;
   handleSecondsChange: (event: any) => void;
   handleMillisecondsChange: (event: any) => void;
 }
 
-const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, lineStartInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
+const TimeControl = ({ hoursInput, minutesInput, secondsInput, millisecondsInput, lineStartInput, timeInputString, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
 
-  const timeInputString = `${hoursInput.toString().padStart(2, '0')}:${minutesInput.toString().padStart(2, '0')}:${secondsInput.toString().padStart(2, '0')},${millisecondsInput.toString().padStart(3, '0')}`;
 
   return (
     <>

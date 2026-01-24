@@ -49,8 +49,8 @@ const offsetData = (dataArr, offset) => {
         newLine = scrubNonDialogue(newLine, "[","]");
         newLine = scrubNonDialogue(newLine, "[","] ");
       }
-      array.push(newLine);
     }
+    array.push(newLine);
   });
   return array.join("\n");
 }

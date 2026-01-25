@@ -39,13 +39,12 @@ const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialog
       }
       else if (StringUtils.isLineNumber(newLine)) {
         // line is a line number
-        // newLine = currentLineNumber + "\r";
-        // newLine = currentLineNumber.toString();
+        const lineAsNumber = Number(newLine);
         if (!shouldStopOffsetting) {
-          if (Number(newLine) >= lineNumberToStartOffset) {
+          if (lineAsNumber >= lineNumberToStartOffset) {
             shouldOffset = true;
           }
-          if ((lineNumberToStopOffset !== null && Number(newLine) > lineNumberToStopOffset)) {
+          if ((lineNumberToStopOffset !== null && lineAsNumber > lineNumberToStopOffset)) {
             shouldOffset = false;
             shouldStopOffsetting = true;
           }

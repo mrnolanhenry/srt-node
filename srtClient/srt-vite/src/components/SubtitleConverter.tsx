@@ -3,41 +3,54 @@ import TimeUtils from "../utilities/TimeUtils";
 
 interface SubtitleConverterProps {
   lineStartInput: number;
-  lineEndInput: number | null;
+  lineStopInput: number | null;
   shouldScrubNonDialogue: boolean;
   timeInputString: string;
   textInput: string;
   handleConvertCallback: (convertedText: string) => void;
 }
 
-const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogue, timeInputString, textInput, handleConvertCallback }: SubtitleConverterProps) => {
+const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialogue, timeInputString, textInput, handleConvertCallback }: SubtitleConverterProps) => {
   const handleConvert = (): void => {
-      const dataArr = textInput.split("\n");
-      const offset = getOffsetAmount(dataArr);
-      if (offset === 0 || isNaN(offset)) {
-        return console.error('no difference from current time');
+      const lines = textInput.split("\n");
+      const offset = getOffsetAmount(lines);
+      if (isNaN(offset)) {
+        return console.error('invalid offset amount from current time');
       }
-      const newData = offsetData(dataArr,offset);
+      const newData = sequenceLineNumbers(offsetAndScrubSubtitles(lines,offset));
       handleConvertCallback(newData);
   };
   
-  const offsetData = (dataArr: string[], offset: number): string => {
-    let array: string[] = [];
-    let lineNumber = 1;
+  const offsetAndScrubSubtitles = (lines: string[], offset: number): string[] => {
+    let newSubtitles: string[] = [];
+    let currentLineNumber = 1;
     const lineNumberToStartOffset = lineStartInput;
-    let startOffset = false;
-    dataArr.forEach(line => {
-      let newLine = line;
-      if (line.includes(" --> ") && startOffset) {
+    const lineNumberToStopOffset = lineStopInput ?? null;
+    let shouldOffset = false;
+    // this annoying extra boolean is to handle the case where an input SRT file has line numbers that are not in increasing order
+    // e.g. line 1 through 300 exist, but the next line number is 1 again instead of 301 - in this case, we don't want to offset the second "1" line and following lines
+    // This would come up frequently in cases where multiple SRT files are concatenated together
+    let shouldStopOffsetting = false;
+    lines.forEach(line => {
+      let newLine = StringUtils.removeReturnCharacter(line);
+      if (line.includes(" --> ") && shouldOffset) {
+        // line is a timecode line
         newLine = getNewLineWithOffset(line, offset);
       }
-      else if (StringUtils.isLineNumber(StringUtils.removeReturnCharacter(line))) {
-        // newLine = lineNumber + "\r";
-        newLine = lineNumber.toString();
-        lineNumber++;
-        if (lineNumber > lineNumberToStartOffset) {
-          startOffset = true;
+      else if (StringUtils.isLineNumber(newLine)) {
+        // line is a line number
+        // newLine = currentLineNumber + "\r";
+        // newLine = currentLineNumber.toString();
+        if (!shouldStopOffsetting) {
+          if (Number(newLine) >= lineNumberToStartOffset) {
+            shouldOffset = true;
+          }
+          if ((lineNumberToStopOffset !== null && Number(newLine) > lineNumberToStopOffset)) {
+            shouldOffset = false;
+            shouldStopOffsetting = true;
+          }
         }
+        currentLineNumber++;
       }
       else {
         // line is actual subtitle or dialogue
@@ -48,12 +61,27 @@ const SubtitleConverter = ({ lineStartInput, lineEndInput, shouldScrubNonDialogu
           newLine = scrubNonDialogue(newLine, "[","] ");
         }
       }
+      newSubtitles.push(newLine);
+    });
+    return newSubtitles;
+  };
+
+  const sequenceLineNumbers = (dataArr: string[]): string => {
+    let array: string[] = [];
+    let currentLineNumber = 1;
+    dataArr.forEach(line => {
+      let newLine = StringUtils.removeReturnCharacter(line);
+      if (StringUtils.isLineNumber(newLine)) {
+        // line is a line number
+        newLine = currentLineNumber.toString();
+        currentLineNumber++;
+      }
       array.push(newLine);
     });
     return array.join("\n");
   };
   
-  //WIP!!
+  //TODO: test this function thoroughly - was described as a WIP previously
   const scrubNonDialogue = (line: string, startChar:string, endChar: string): string => {
     let newLine = line;
     const startSearch = line.indexOf(startChar);

@@ -14,7 +14,7 @@ function App() {
   const [textOutput, setTextOutput] = useState<string>('Your converted SRT file will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
-  const [lineEndInput, setLineEndInput] = useState<number | null>(null);
+  const [lineStopInput, setLineStopInput] = useState<number | null>(null);
   const [timeInput, setTimeInput] = useState<Time>(new Time(0, 0, 0, 0));
 
   const shouldScrubNonDialogue = false;
@@ -93,9 +93,9 @@ function App() {
     }
   };
 
-  const handleLineEndInputChange = (event: any) => {
+  const handleLineStopInputChange = (event: any) => {
     if (event.target.validity.valid) {
-      setLineEndInput(event.target.valueAsNumber);
+      setLineStopInput(event.target.valueAsNumber);
     }
     else {
       console.log("TODO: Handle Invalid number input later");
@@ -136,9 +136,9 @@ function App() {
           <div className="flex-row centered-row">
             <LineNumberControl 
               lineStartInput={lineStartInput}
-              lineEndInput={lineEndInput}
+              lineStopInput={lineStopInput}
               handleLineStartInputChange={handleLineStartInputChange}
-              handleLineEndInputChange={handleLineEndInputChange}
+              handleLineStopInputChange={handleLineStopInputChange}
             />
           </div>
           <div className="flex-row">
@@ -153,7 +153,7 @@ function App() {
           </div>  
           <SubtitleConverter 
             lineStartInput={lineStartInput}
-            lineEndInput={lineEndInput}
+            lineStopInput={lineStopInput}
             shouldScrubNonDialogue={shouldScrubNonDialogue}
             timeInputString={TimeUtils.getDisplayTime(timeInput)}
             textInput={textInputs[0]}

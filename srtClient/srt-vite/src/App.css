@@ -49,6 +49,7 @@
 
 .align-start-column {
   align-items: flex-start;
+  text-align: start;
 }
 
 p {

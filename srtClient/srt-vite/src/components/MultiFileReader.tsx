@@ -43,9 +43,7 @@ const MultiFileReader = ({ fileContents, setFileContents }: MultiFileReaderProps
           <h3>Uploaded Files:</h3>
           <ul>
             {fileContents.map((file, index) => (
-              <>
-                <textarea key={index} id={file.name} name={file.name} rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
-              </>
+                <textarea readOnly key={`input-file-${index}`} id={file.name} name={file.name} rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
             ))}
           </ul>
         </>

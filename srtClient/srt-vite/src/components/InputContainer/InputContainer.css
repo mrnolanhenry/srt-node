@@ -9,9 +9,9 @@ body {font-family: Arial;}
 
 /* Style the buttons inside the tab */
 .input-container-tab button {
-    background-color: #777;
+    background-color: rgb(82, 82, 82);
     float: left;
-    border: 1px solid #777;
+    border: 1px solid rgb(82, 82, 82);
     -moz-border-radius: 0px;
     -webkit-border-radius: 8px 8px 0px 0px;
     border-radius: 8px 8px 0px 0px;
@@ -24,8 +24,8 @@ body {font-family: Arial;}
 
 /* Change background color of buttons on hover */
 .input-container-tab button:hover {
-  background-color: #ddd;
-  border-color: #ddd;
+  background-color: #4f686b;
+  border-color: #4f686b;
 }
 
 /* Create an active/current tablink class */
@@ -37,6 +37,6 @@ body {font-family: Arial;}
 /* Style the tab content */
 .input-container-tabcontent {
   padding: 6px 12px;
-  border-top: none;
+  border-radius: 0 8px 8px 8px;
   background-color: #528388;
 }

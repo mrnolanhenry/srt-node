@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import MultiFileReader from './components/MultiFileReader';
 import type { FileContent } from './interfaces/FileContent';
-import TimeControl from './components/TimeControl';
-import LineNumberControl from './components/LineNumberControl';
-import SubtitleConverter from './components/SubtitleConverter';
+import TimeControl from './components/TimeControl/TimeControl';
+import LineNumberControl from './components/LineNumberControl/LineNumberControl';
+import SubtitleConverter from './components/SubtitleConverter/SubtitleConverter';
 import TimeUtils from './utilities/TimeUtils';
 import Time from './classes/Time';
+import InputContainer from './components/InputContainer/InputContainer';
 
 function App() {
   const [fileInputs, setFileInputs] = useState<string[]>([]);
@@ -123,16 +123,15 @@ function App() {
   return (
     <>
       <div className="flex-wrapper">
-        <div className="flex-column padded-column">
-          <MultiFileReader 
+        <div id="inputContainerColumn"className="flex-column padded-column">
+          <InputContainer
             fileContents={fileContents} 
+            textInputs={textInputs}
+            handleTextInputChange={handleTextInputChange}
             setFileContents={setFileContents} 
           />
         </div>
-        <div className="flex-column padded-column">
-            <textarea id="srtInputDisplay" name="srtInputDisplay" rows={12} cols={40} onChange={handleTextInputChange} value={textInputs[0]}></textarea>
-        </div>
-        <div className="flex-column padded-column">
+        <div id="controlsContainerColumn"className="flex-column padded-column">
           <div className="flex-row centered-row">
             <LineNumberControl 
               lineStartInput={lineStartInput}
@@ -160,7 +159,7 @@ function App() {
             handleConvertCallback={setTextOutput}
           />
         </div>
-        <div className="flex-column padded-column">
+        <div id="outputContainerColumn" className="flex-column padded-column">
           <textarea id="srtOutput" name="srtOutput" rows={12} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
           <button id="btnDownload" onClick={handleDownload}>Download</button>
         </div>

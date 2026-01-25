@@ -1,13 +1,14 @@
 // import { useState, type BaseSyntheticEvent } from 'react';
 import { type BaseSyntheticEvent } from 'react';
-import type { FileContent } from '../interfaces/FileContent';
+import type { FileContent } from '../../interfaces/FileContent';
+import './FileUpload.css';
 
-interface MultiFileReaderProps {
+interface FileUploadProps {
   fileContents: FileContent[];
   setFileContents: React.Dispatch<React.SetStateAction<FileContent[]>>;
 }
 
-const MultiFileReader = ({ fileContents, setFileContents }: MultiFileReaderProps) => {
+const FileUpload = ({ fileContents, setFileContents }: FileUploadProps) => {
   const handleFileChange = (event: BaseSyntheticEvent) => {
     const files = event.target.files as FileList;
     if (files && files.length > 0) {
@@ -38,22 +39,8 @@ const MultiFileReader = ({ fileContents, setFileContents }: MultiFileReaderProps
   return (
     <>
       <input multiple type="file" id="srtInputFile" name="srtInputFile" accept=".srt, .txt" onChange={handleFileChange} />
-      {fileContents.length > 0 ? (
-        <>
-          <h3>Uploaded Files:</h3>
-          <ul>
-            {fileContents.map((file, index) => (
-                <textarea readOnly key={`input-file-${index}`} id={file.name} name={file.name} rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <>
-            <p>No files selected yet.</p>
-        </>
-      )}
     </>
   );
 };
 
-export default MultiFileReader;
+export default FileUpload;

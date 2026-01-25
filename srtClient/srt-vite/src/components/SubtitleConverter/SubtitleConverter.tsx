@@ -1,5 +1,5 @@
-import StringUtils from "../utilities/StringUtils";
-import TimeUtils from "../utilities/TimeUtils";
+import StringUtils from "../../utilities/StringUtils";
+import TimeUtils from "../../utilities/TimeUtils";
 
 interface SubtitleConverterProps {
   lineStartInput: number;

@@ -1,4 +1,4 @@
-import TimeUtils from '../utilities/TimeUtils';
+import TimeUtils from '../../utilities/TimeUtils';
 import './TimeControl.css';
 
 interface TimeControlProps {

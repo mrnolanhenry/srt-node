@@ -1,4 +1,4 @@
-import { useEffect, useState, type BaseSyntheticEvent } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import MultiFileReader from './components/MultiFileReader';
 import type { FileContent } from './interfaces/FileContent';
@@ -6,6 +6,7 @@ import TimeControl from './components/TimeControl';
 import LineNumberControl from './components/LineNumberControl';
 import SubtitleConverter from './components/SubtitleConverter';
 import TimeUtils from './utilities/TimeUtils';
+import Time from './classes/Time';
 
 function App() {
   const [fileInputs, setFileInputs] = useState<string[]>([]);
@@ -14,7 +15,7 @@ function App() {
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
   const [lineEndInput, setLineEndInput] = useState<number | null>(null);
-  const [timeInput, setTimeInput] = useState<Date>(TimeUtils.getNewTime(0, 0, 0, 0));
+  const [timeInput, setTimeInput] = useState<Time>(new Time(0, 0, 0, 0));
 
   const shouldScrubNonDialogue = false;
 
@@ -39,7 +40,6 @@ function App() {
       const validNumber = !isNaN(event.target.valueAsNumber) ? event.target.valueAsNumber : 0;
       const newTimeInput = TimeUtils.getNewTimeWithHours(timeInput, validNumber);
       setTimeInput(newTimeInput);
-
     }
     else {
       console.log("TODO: Handle Invalid number input later");

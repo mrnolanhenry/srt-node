@@ -1,22 +1,21 @@
+import Time from '../classes/Time';
+
 abstract class TimeUtils { 
-  static getNewTime(hrs: number, mins: number, secs: number, millisecs: number): Date {
-    return new Date(Date.UTC(1970, 0, 1, hrs, mins, secs, millisecs)); // Year, Month (0-indexed), Day, Hour, Minute, Second, Millisecond
+
+  static getNewTimeWithHours(time: Time, hrs: number) { 
+    return new Time(hrs, time.getUTCMinutes(), time.getUTCSeconds(), time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithHours(dateTime: Date, hrs: number) { 
-    return new Date(TimeUtils.getNewTime(hrs, dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds()));
+  static getNewTimeWithMinutes(time: Time, mins: number) { 
+    return new Time(time.getUTCHours(), mins, time.getUTCSeconds(), time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithMinutes(dateTime: Date, mins: number) { 
-    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), mins, dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds()));
+  static getNewTimeWithSeconds(time: Time, secs: number) { 
+    return new Time(time.getUTCHours(), time.getUTCMinutes(), secs, time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithSeconds(dateTime: Date, secs: number) { 
-    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), dateTime.getUTCMinutes(), secs, dateTime.getUTCMilliseconds()));
-  }
-
-  static getNewTimeWithMilliseconds(dateTime: Date, millisecs: number) { 
-    return new Date(TimeUtils.getNewTime(dateTime.getUTCHours(), dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), millisecs));
+  static getNewTimeWithMilliseconds(time: Time, millisecs: number) { 
+    return new Time(time.getUTCHours(), time.getUTCMinutes(), time.getUTCSeconds(), millisecs);
   }
 
   static convertMillisecsToString(totalMilliSecs: number): string {
@@ -27,14 +26,14 @@ abstract class TimeUtils {
     remainingMillisecs = remainingMillisecs - (mins * 60 * 1000);
     const secs = Math.floor(remainingMillisecs/(1000));
     remainingMillisecs = remainingMillisecs - (secs * 1000);
-    return this.formatHrMinSecMilliseconds(hrs, mins, secs, remainingMillisecs);
+    return this.formatTimeAsString(hrs, mins, secs, remainingMillisecs);
   };
 
-  static getDisplayTime(dateTime:Date): string {
-    return this.formatHrMinSecMilliseconds(dateTime.getUTCHours(), dateTime.getUTCMinutes(), dateTime.getUTCSeconds(), dateTime.getUTCMilliseconds());
+  static getDisplayTime(time: Time): string {
+    return this.formatTimeAsString(time.getUTCHours(), time.getUTCMinutes(), time.getUTCSeconds(), time.getUTCMilliseconds());
   };
 
-  static formatHrMinSecMilliseconds(hrs: number, mins: number, secs: number, millisecs: number): string {
+  static formatTimeAsString(hrs: number, mins: number, secs: number, millisecs: number): string {
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')},${millisecs.toString().padStart(3, '0')}`;
   };
   
@@ -44,6 +43,19 @@ abstract class TimeUtils {
   
   static formatMillisecs(millisecs: number): string {
     return millisecs.toString().padStart(3, '0')
+  };
+
+  // TODO: currently unused, but will likely be useful in future - consider removing later if not used
+  static convertStringToTime(timeString: string): Time | undefined {
+    const timeArr = timeString.split(":");
+    if (!this.isValidTimeInMillisecs(timeArr)) {
+      if (!this.isValidTimeInFps(timeArr)) {
+        console.log("time format isn't valid");
+        return;
+      }
+      return this.getTimeFromFpsString(timeArr);
+    }
+    return this.getTimeFromString(timeArr);
   };
   
   static convertStringToMillisecs(timeString: string): number | undefined {
@@ -56,6 +68,26 @@ abstract class TimeUtils {
       return this.getMillisecsFromFps(timeArr);
     }
     return this.getMillisecs(timeArr);
+  };
+
+  // TODO: parent method currently unused, but will likely be useful in future - consider removing later if not used
+  static getTimeFromString(timeArr: string[]): Time {
+    const hrs = parseInt(timeArr[0]);
+    const mins = parseInt(timeArr[1]);
+    const secsAndMillisecs = timeArr[2].split(",");
+    const secs = parseInt(secsAndMillisecs[0]);
+    const millisecs = parseInt(secsAndMillisecs[1]);
+    return new Time(hrs, mins, secs, millisecs);
+  };
+
+  // TODO: parent method currently unused, but will likely be useful in future - consider removing later if not used
+  static getTimeFromFpsString(timeArr: string[]): Time {
+    const fps = 24;
+    const hrs = parseInt(timeArr[0]);
+    const mins = parseInt(timeArr[1]);
+    const secs = parseInt(timeArr[2]);
+    const millisecs = Math.round(parseInt(timeArr[3]) * (1000 / fps));
+    return new Time(hrs, mins, secs, millisecs);
   };
   
   static getMillisecs(timeArr: string[]): number {

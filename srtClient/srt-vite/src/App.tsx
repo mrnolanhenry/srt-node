@@ -10,8 +10,8 @@ import InputContainer from './components/InputContainer/InputContainer';
 
 function App() {
   // TODO: Consider making textInputs a single string vs. string[]
-  const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your SRT files here.']);
-  const [textOutput, setTextOutput] = useState<string>('Your converted SRT file will appear here.');
+  const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your .srt files here.']);
+  const [textOutput, setTextOutput] = useState<string>('Your converted .srt file with new timecodes will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
   const [lineStopInput, setLineStopInput] = useState<number | null>(null);
@@ -123,37 +123,11 @@ function App() {
   return (
     <>
       <div className="flex-wrapper">
-        <div className="flex-column full-width centered-column">
-          <div className="section-row flex-row centered-row full-width">
-            <div id="controlsContainerColumn"className="flex-column padded-column">
-              <div className="flex-row centered-row">
-                <LineNumberControl 
-                  lineStartInput={lineStartInput}
-                  lineStopInput={lineStopInput}
-                  handleLineStartInputChange={handleLineStartInputChange}
-                  handleLineStopInputChange={handleLineStopInputChange}
-                />
-              </div>
-              <div className="flex-row centered-row">
-                <TimeControl 
-                  timeInput={timeInput}
-                  lineStartInput={lineStartInput}
-                  handleHoursChange={handleHoursChange}
-                  handleMinutesChange={handleMinutesChange}
-                  handleSecondsChange={handleSecondsChange}
-                  handleMillisecondsChange={handleMillisecondsChange}
-                />
-              </div>
-              <div className="flex-row centered-row">
-                <SubtitleConverter 
-                  lineStartInput={lineStartInput}
-                  lineStopInput={lineStopInput}
-                  shouldScrubNonDialogue={shouldScrubNonDialogue}
-                  timeInputString={TimeUtils.getDisplayTime(timeInput)}
-                  textInput={textInputs[0]}
-                  handleConvertCallback={setTextOutput}
-                />
-              </div>
+        <div className="flex-column full-width centered-column padded-column">
+          <div id="headerRow" className="flex-row section-row">
+            <div id="header">
+              <h3>Convert Subtitles</h3>
+              <small>Update timecodes on existing .srt files</small>
             </div>
           </div>
         </div>
@@ -168,8 +142,44 @@ function App() {
               />
             </div>
             <div id="outputContainerColumn" className="flex-column padded-column">
-              <textarea id="srtOutput" name="srtOutput" rows={12} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
+              <textarea id="srtOutput" className="full-width no-resize" name="srtOutput" rows={14} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
               <button id="btnDownload" onClick={handleDownload}>Download</button>
+            </div>
+          </div>
+        </div>
+        <div id="controlColumn" className="flex-column centered-column">
+          <div className="section-row flex-row full-width">
+            <div className="flex-column padded-column">
+              <LineNumberControl 
+                lineStartInput={lineStartInput}
+                lineStopInput={lineStopInput}
+                handleLineStartInputChange={handleLineStartInputChange}
+                handleLineStopInputChange={handleLineStopInputChange}
+              />
+            </div>
+            <div className="flex-column padded-column">
+              <TimeControl 
+                timeInput={timeInput}
+                lineStartInput={lineStartInput}
+                handleHoursChange={handleHoursChange}
+                handleMinutesChange={handleMinutesChange}
+                handleSecondsChange={handleSecondsChange}
+                handleMillisecondsChange={handleMillisecondsChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div id="convertColumn" className="flex-column centered-column">
+          <div className="section-row flex-row full-width">
+            <div className="flex-column full-width padded-column">
+              <SubtitleConverter 
+                lineStartInput={lineStartInput}
+                lineStopInput={lineStopInput}
+                shouldScrubNonDialogue={shouldScrubNonDialogue}
+                timeInputString={TimeUtils.getDisplayTime(timeInput)}
+                textInput={textInputs[0]}
+                handleConvertCallback={setTextOutput}
+              />
             </div>
           </div>
         </div>

@@ -34,17 +34,25 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
             <div className="flex-row tab-content-row">
                 <div className="flex-column full-width">
                     <div id="inputSubtitles" className={`input-container-tabcontent padded-container ${activeTab === INPUT_SUBTITLES ? '' : 'hidden'}`}>
-                        <div className="flex-row inner-tabcontent-container">
-                            <textarea id="srtInputDisplay" className="full-width" name="srtInputDisplay" rows={12} cols={40} onChange={handleTextInputChange} value={textInputs[0]}></textarea>
+                        <div className="inner-tabcontent-container">
+                            <div className="flex-row padded-row">
+                                <FileUpload 
+                                    fileContents={fileContents} 
+                                    handleUploadCallback={handleUploadCallback} 
+                                />
+                            </div>
+                            <div className="flex-row">
+                                <textarea id="srtInputDisplay" className="full-width no-resize" name="srtInputDisplay" rows={14} cols={50} onChange={handleTextInputChange} value={textInputs[0]}></textarea>                
+                            </div>
                         </div>
                     </div>
                     <div id="uploadedFiles" className={`input-container-tabcontent ${activeTab === UPLOADED_FILES ? '' : 'hidden'}`}>
-                        <FileViewer fileContents={fileContents} />
+                        <FileViewer 
+                            fileContents={fileContents} 
+                            handleUploadCallback={handleUploadCallback} 
+                        />
                     </div>
                 </div>
-            </div>
-            <div className="flex-row">
-                <FileUpload fileContents={fileContents} handleUploadCallback={handleUploadCallback} />
             </div>
         </>
     );

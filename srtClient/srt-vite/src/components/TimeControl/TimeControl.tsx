@@ -54,8 +54,10 @@ const TimeControl = ({ timeInput, lineStartInput, handleHoursChange, handleMinut
         </div>
         <div className="flex-row centered-row">
           <div className="flex-column">
-            <p>Selected New Time for Line {lineStartInput}:</p>
-            <p>{TimeUtils.getDisplayTime(timeInput)}</p>
+            <p>Selected New Time for Line {lineStartInput}:
+              <br />
+              {TimeUtils.getDisplayTime(timeInput)}
+            </p>
           </div>
         </div>
       </div>

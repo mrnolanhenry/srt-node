@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { FileContent } from '../../interfaces/FileContent';
 import './FileViewer.css';
+import FileUpload from '../FileUpload/FileUpload';
 
 interface FileViewerProps {
   fileContents: FileContent[];
+  handleUploadCallback: (event: any) => void;
 }
 
-const FileViewer = ({ fileContents }: FileViewerProps) => {
+const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => {
   // const [activeTab, setActiveTab] = useState<string>(fileContents && fileContents.length ? fileContents[0].name : "");
   const [activeTab, setActiveTab] = useState<string>("");
 
@@ -37,15 +39,20 @@ const FileViewer = ({ fileContents }: FileViewerProps) => {
           {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
                 <h4>{file.name}</h4>
-                <textarea readOnly id={file.name} name={file.name} rows={12} cols={50} value={(file.content as string) ?? ""}></textarea>
+                <textarea readOnly id={file.name} className="full-width no-resize" name={file.name} rows={14} cols={50} value={(file.content as string) ?? ""}></textarea>
               </div>      
           ))}
           <div className="clearfix"></div>
         </div>
       ) : (
-        <>
-            <p>No files selected yet.</p>
-        </>
+        <div className="inner-tabcontent-container padded-container">
+          <div className="flex-row padded-row">
+              <FileUpload 
+                  fileContents={fileContents} 
+                  handleUploadCallback={handleUploadCallback} 
+              />
+          </div>
+        </div>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 /* body {font-family: Arial;} */
 
 .tab-content-row {
-  height: 250px;
+  height: 300px;
   box-sizing: border-box;
   border-radius: 0 8px 8px 8px;
   background-color: #528388;
@@ -36,12 +36,11 @@
 
 .input-container-tabcontent {
   padding: 0;
-  /* border-radius: 0 8px 8px 8px;
-  background-color: #528388; */
+  height: 100%;
 }
 
 .inner-tabcontent-container {
-  /* height: 250px; */
+  height: 100%;
 }
 
 .padded-container {

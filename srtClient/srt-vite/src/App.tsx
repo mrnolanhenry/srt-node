@@ -9,6 +9,7 @@ import Time from './classes/Time';
 import InputContainer from './components/InputContainer/InputContainer';
 
 function App() {
+  // TODO: Consider making textInputs a single string vs. string[]
   const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your SRT files here.']);
   const [textOutput, setTextOutput] = useState<string>('Your converted SRT file will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);

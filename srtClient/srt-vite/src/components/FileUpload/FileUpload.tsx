@@ -5,10 +5,10 @@ import './FileUpload.css';
 
 interface FileUploadProps {
   fileContents: FileContent[];
-  setFileContents: React.Dispatch<React.SetStateAction<FileContent[]>>;
+  handleUploadCallback: (event: any) => void;
 }
 
-const FileUpload = ({ fileContents, setFileContents }: FileUploadProps) => {
+const FileUpload = ({ fileContents, handleUploadCallback }: FileUploadProps) => {
   const handleFileChange = (event: BaseSyntheticEvent) => {
     const files = event.target.files as FileList;
     if (files && files.length > 0) {
@@ -31,7 +31,7 @@ const FileUpload = ({ fileContents, setFileContents }: FileUploadProps) => {
 
       // Wait for all files to be read before updating the state
       Promise.all(promises).then(() => {
-        setFileContents(contents);
+        handleUploadCallback(contents);
       });
     }
   };

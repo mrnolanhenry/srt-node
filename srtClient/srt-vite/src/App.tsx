@@ -9,7 +9,6 @@ import Time from './classes/Time';
 import InputContainer from './components/InputContainer/InputContainer';
 
 function App() {
-  const [fileInputs, setFileInputs] = useState<string[]>([]);
   const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your SRT files here.']);
   const [textOutput, setTextOutput] = useState<string>('Your converted SRT file will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
@@ -20,10 +19,10 @@ function App() {
   const shouldScrubNonDialogue = false;
 
   useEffect(() => {
-    // console.log('useEffect - fileInputs changed:');
-    // console.log(fileInputs);
-    setTextInputs(fileInputs);
-  }, [fileInputs]);
+    if (fileContents && fileContents.length) {
+      setTextInputs(fileContents.map((fileContent) => fileContent.content as string));
+    }
+  }, [fileContents.length]);
 
   const handleTextInputChange = (event: any) => {
     const newTextInputs = [...textInputs];
@@ -123,45 +122,55 @@ function App() {
   return (
     <>
       <div className="flex-wrapper">
-        <div id="inputContainerColumn"className="flex-column padded-column">
-          <InputContainer
-            fileContents={fileContents} 
-            textInputs={textInputs}
-            handleTextInputChange={handleTextInputChange}
-            setFileContents={setFileContents} 
-          />
-        </div>
-        <div id="controlsContainerColumn"className="flex-column padded-column">
-          <div className="flex-row centered-row">
-            <LineNumberControl 
-              lineStartInput={lineStartInput}
-              lineStopInput={lineStopInput}
-              handleLineStartInputChange={handleLineStartInputChange}
-              handleLineStopInputChange={handleLineStopInputChange}
-            />
+        <div className="flex-column full-width centered-column">
+          <div className="section-row flex-row centered-row full-width">
+            <div id="controlsContainerColumn"className="flex-column padded-column">
+              <div className="flex-row centered-row">
+                <LineNumberControl 
+                  lineStartInput={lineStartInput}
+                  lineStopInput={lineStopInput}
+                  handleLineStartInputChange={handleLineStartInputChange}
+                  handleLineStopInputChange={handleLineStopInputChange}
+                />
+              </div>
+              <div className="flex-row centered-row">
+                <TimeControl 
+                  timeInput={timeInput}
+                  lineStartInput={lineStartInput}
+                  handleHoursChange={handleHoursChange}
+                  handleMinutesChange={handleMinutesChange}
+                  handleSecondsChange={handleSecondsChange}
+                  handleMillisecondsChange={handleMillisecondsChange}
+                />
+              </div>
+              <div className="flex-row centered-row">
+                <SubtitleConverter 
+                  lineStartInput={lineStartInput}
+                  lineStopInput={lineStopInput}
+                  shouldScrubNonDialogue={shouldScrubNonDialogue}
+                  timeInputString={TimeUtils.getDisplayTime(timeInput)}
+                  textInput={textInputs[0]}
+                  handleConvertCallback={setTextOutput}
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex-row">
-            <TimeControl 
-              timeInput={timeInput}
-              lineStartInput={lineStartInput}
-              handleHoursChange={handleHoursChange}
-              handleMinutesChange={handleMinutesChange}
-              handleSecondsChange={handleSecondsChange}
-              handleMillisecondsChange={handleMillisecondsChange}
-            />
-          </div>  
-          <SubtitleConverter 
-            lineStartInput={lineStartInput}
-            lineStopInput={lineStopInput}
-            shouldScrubNonDialogue={shouldScrubNonDialogue}
-            timeInputString={TimeUtils.getDisplayTime(timeInput)}
-            textInput={textInputs[0]}
-            handleConvertCallback={setTextOutput}
-          />
         </div>
-        <div id="outputContainerColumn" className="flex-column padded-column">
-          <textarea id="srtOutput" name="srtOutput" rows={12} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
-          <button id="btnDownload" onClick={handleDownload}>Download</button>
+        <div className="flex-column full-width centered-column">
+          <div className="flex-row section-row">
+            <div id="inputContainerColumn"className="flex-column padded-column">
+              <InputContainer
+                fileContents={fileContents} 
+                textInputs={textInputs}
+                handleTextInputChange={handleTextInputChange}
+                setFileContents={setFileContents} 
+              />
+            </div>
+            <div id="outputContainerColumn" className="flex-column padded-column">
+              <textarea id="srtOutput" name="srtOutput" rows={12} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
+              <button id="btnDownload" onClick={handleDownload}>Download</button>
+            </div>
+          </div>
         </div>
       </div>
     </>

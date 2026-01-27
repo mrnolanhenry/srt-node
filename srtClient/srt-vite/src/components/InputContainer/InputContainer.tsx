@@ -3,6 +3,7 @@ import './InputContainer.css';
 import FileUpload from '../FileUpload/FileUpload';
 import FileViewer from '../FileViewer/FileViewer';
 import { useState } from 'react';
+import CopyTextArea from '../CopyTextArea/CopyTextArea';
 
 interface InputContainerProps {
   fileContents: FileContent[];
@@ -41,8 +42,15 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                                     handleUploadCallback={handleUploadCallback} 
                                 />
                             </div>
-                            <div className="flex-row">
-                                <textarea id="srtInputDisplay" className="full-width no-resize" name="srtInputDisplay" rows={14} cols={50} onChange={handleTextInputChange} value={textInputs[0]}></textarea>                
+                            <div className="flex-row">  
+                                <CopyTextArea 
+                                    className="full-width no-resize" 
+                                    cols={50} 
+                                    id="srtInputDisplay"
+                                    rows={14} 
+                                    onChange={handleTextInputChange} 
+                                    value={textInputs[0]}
+                                />              
                             </div>
                         </div>
                     </div>

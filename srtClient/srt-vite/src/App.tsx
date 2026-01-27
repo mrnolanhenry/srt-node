@@ -7,6 +7,7 @@ import SubtitleConverter from './components/SubtitleConverter/SubtitleConverter'
 import TimeUtils from './utilities/TimeUtils';
 import Time from './classes/Time';
 import InputContainer from './components/InputContainer/InputContainer';
+import CopyTextArea from './components/CopyTextArea/CopyTextArea';
 
 function App() {
   // TODO: Consider making textInputs a single string vs. string[]
@@ -142,7 +143,15 @@ function App() {
               />
             </div>
             <div id="outputContainerColumn" className="flex-column padded-column">
-              <textarea id="srtOutput" className="full-width no-resize" name="srtOutput" rows={14} cols={50} onChange={handleTextOutputChange} value={textOutput}></textarea>
+
+              <CopyTextArea 
+                className="full-width no-resize" 
+                cols={50} 
+                id="srtOutput"
+                rows={14} 
+                onChange={handleTextOutputChange} 
+                value={textOutput}
+                />
               <button id="btnDownload" onClick={handleDownload}>Download</button>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FileContent } from '../../interfaces/FileContent';
 import './FileViewer.css';
 import FileUpload from '../FileUpload/FileUpload';
+import CopyTextArea from '../CopyTextArea/CopyTextArea';
 
 interface FileViewerProps {
   fileContents: FileContent[];
@@ -39,7 +40,17 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
           {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
                 <h4>{file.name}</h4>
-                <textarea readOnly id={file.name} className="full-width no-resize" name={file.name} rows={14} cols={50} value={(file.content as string) ?? ""}></textarea>
+                <CopyTextArea 
+                  className="full-width no-resize" 
+                  cols={50} 
+                  id={file.name}
+                  isReadOnly={true}
+                  rows={14} 
+                  onChange={(event) => {
+                    // TODO: Ultimately want a function here and for each file's contents to not be readOnly
+                  }} 
+                  value={(file.content as string) ?? ""}
+                /> 
               </div>      
           ))}
           <div className="clearfix"></div>

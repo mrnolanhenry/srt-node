@@ -4,17 +4,20 @@
 
 .copy-text-button {
     position: absolute;
-    margin: 10px 20px 0 0;
+    margin: 10px 22px 0 0;
     filter: grayscale(100%);
     float: right;
     z-index: 999;
     cursor: pointer;
     transition: .3s;
+    /* background-color: rgba(0,0,0,.1); */
+    color: white;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0);
 }
 
 .copy-text-hover {
     display: none;
-    opacity: .5;
+    color: #aaa;
 }
 
 .copy-text-button:hover {
@@ -34,5 +37,5 @@
 
 textarea.copy-text-area {
     position: relative;
-    width: fit-content;
+    width: 100%;
 }

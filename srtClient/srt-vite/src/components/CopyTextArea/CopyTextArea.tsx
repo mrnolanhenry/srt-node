@@ -32,7 +32,7 @@ const CopyTextArea = ({ className, cols, id, isReadOnly, rows, value, onChange }
   };
 
   return (
-    <div className="flex-column">
+    <div className="flex-column full-width">
       <div className="flex-row copy-text-row">
         { isReadOnly ? (
           <textarea readOnly id={id} className={`${className} copy-text-area`} name={id} rows={rows} cols={cols} onChange={onChange} value={value}></textarea>

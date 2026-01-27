@@ -31,13 +31,14 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
   return (
     <>
       {fileContents.length > 0 ? (
-        <div className="flex-row inner-tabcontent-container">
-          <div className="file-viewer-tab">
+        <div className="inner-tabcontent-container">
+          <div className="flex-row">
+            <div className="file-viewer-tab">
+              {fileContents.map((file, index) => (
+                <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={(event) => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
+              ))}
+            </div>
             {fileContents.map((file, index) => (
-              <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={(event) => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
-            ))}
-          </div>
-          {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
                 <CopyTextArea 
                   className="full-width no-resize" 
@@ -51,7 +52,14 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
                   value={(file.content as string) ?? ""}
                 /> 
               </div>      
-          ))}
+            ))}
+          </div>
+          <div id="uploadMoreFilesRow" className="flex-row padded-row">
+              <FileUpload 
+                  fileContents={fileContents} 
+                  handleUploadCallback={handleUploadCallback} 
+              />
+          </div>
           <div className="clearfix"></div>
         </div>
       ) : (

@@ -51,3 +51,7 @@
   clear: both;
   display: table;
 }
+
+#uploadMoreFilesRow {
+  padding-left: 16px;
+}

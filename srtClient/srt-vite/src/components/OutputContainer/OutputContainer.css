@@ -1,7 +1,7 @@
 /* body {font-family: Arial;} */
 
 .output-tab-content-row {
-  height: 470px;
+  height: 300px;
   box-sizing: border-box;
   border-radius: 0 8px 8px 8px;
   background-color: #9b9d67;
@@ -45,10 +45,4 @@
 
 .padded-container {
   padding: 16px;
-}
-
-#outputSpacerRow {
-  /* TODO: use better styling */
-  height: 36.91px;
-  box-sizing: border-box;
 }

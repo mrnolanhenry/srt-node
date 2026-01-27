@@ -33,16 +33,15 @@
   background-color: #ccc;
 }
 
+.file-viewer-tablinks {
+  font-size: 14px;
+}
+
 /* Style the tab content */
 .file-viewer-tabcontent {
   float: left;
   /* padding: 0px 16px; */
   padding: 16px 16px 0 16px;
-
-  h4 {
-    /* TODO: handle styling better eventually - this is to line up perfectly with Input Subtitles textarea */
-    margin-top: 4.91px;
-  }
 }
 
 /* Clear floats after the tab */

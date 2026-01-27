@@ -28,7 +28,7 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
         <>
             <div className="flex-row">
                 <div className="input-container-tab">
-                    <button className={`input-container-tablinks ${activeTab === INPUT_SUBTITLES ? 'active' : ''}`} onClick={(event) => setActiveTab(INPUT_SUBTITLES)}>Input Subtitles</button>
+                    <button className={`input-container-tablinks ${activeTab === INPUT_SUBTITLES ? 'active' : ''}`} onClick={(event) => setActiveTab(INPUT_SUBTITLES)}>Edit Subtitles</button>
                     <button className={`input-container-tablinks ${activeTab === UPLOADED_FILES ? 'active' : ''}`} onClick={(event) => setActiveTab(UPLOADED_FILES)}>Uploaded Files</button>
                 </div>
             </div>
@@ -36,12 +36,6 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                 <div className="flex-column full-width">
                     <div id="inputSubtitles" className={`input-container-tabcontent padded-container ${activeTab === INPUT_SUBTITLES ? '' : 'hidden'}`}>
                         <div className="inner-tabcontent-container">
-                            <div className="flex-row padded-row">
-                                <FileUpload 
-                                    fileContents={fileContents} 
-                                    handleUploadCallback={handleUploadCallback} 
-                                />
-                            </div>
                             <div className="flex-row">  
                                 <CopyTextArea 
                                     className="full-width no-resize" 
@@ -51,6 +45,12 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                                     onChange={handleTextInputChange} 
                                     value={textInputs[0]}
                                 />              
+                            </div>
+                            <div className="flex-row padded-row">
+                                <FileUpload 
+                                    fileContents={fileContents} 
+                                    handleUploadCallback={handleUploadCallback} 
+                                />
                             </div>
                         </div>
                     </div>

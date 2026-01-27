@@ -34,12 +34,11 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
         <div className="flex-row inner-tabcontent-container">
           <div className="file-viewer-tab">
             {fileContents.map((file, index) => (
-              <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={(event) => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 14)}</button>
+              <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={(event) => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
             ))}
           </div>
           {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
-                <h4>{file.name}</h4>
                 <CopyTextArea 
                   className="full-width no-resize" 
                   cols={50} 

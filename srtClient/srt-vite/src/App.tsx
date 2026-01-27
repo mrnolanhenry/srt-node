@@ -11,7 +11,11 @@ import OutputContainer from './components/OutputContainer/OutputContainer';
 
 function App() {
   // TODO: Consider making textInputs a single string vs. string[]
-  const [textInputs, setTextInputs] = useState<string[]>(['Upload or paste your .srt files here.']);
+  const [textInputs, setTextInputs] = useState<string[]>([
+    `Update timecodes on existing .srt files with ease!
+    \nEnter your subtitles here or upload multiple .srt files using the button below.
+    \nBy default, the contents of the first file uploaded will appear here.
+    \nClick the 'Uploaded Files' tab above to work with your other files.`]);
   const [textOutput, setTextOutput] = useState<string>('Your converted .srt file with new timecodes will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
@@ -108,9 +112,8 @@ function App() {
       <div className="flex-wrapper">
         <div className="flex-column full-width centered-column padded-column">
           <div id="headerRow" className="flex-row section-row">
-            <div id="header">
+            <div className="flex-column">
               <h3>Convert Subtitles</h3>
-              <small>Update timecodes on existing .srt files</small>
             </div>
           </div>
         </div>

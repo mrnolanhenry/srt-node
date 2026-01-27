@@ -42,8 +42,6 @@ const OutputContainer = ({ textOutput, handleTextOutputChange }: OutputContainer
                 <div className="flex-column full-width">
                     <div id="outputSubtitles" className={`output-container-tabcontent padded-container ${activeTab === OUTPUT_SUBTITLES ? '' : 'hidden'}`}>
                         <div className="inner-tabcontent-container">
-                            <div id="outputSpacerRow" className="flex-row padded-row">
-                            </div>
                             <div className="flex-row">  
                                 <CopyTextArea 
                                     className="full-width no-resize" 

@@ -20,6 +20,10 @@
   align-items: center; */
 }
 
+.flex-end-row {
+  justify-content: flex-end;
+}
+
 .padded-column {
   padding: 0rem 2rem 0rem 2rem;
 }
@@ -108,11 +112,9 @@ textarea.no-resize {
   border-bottom: 1px solid white;
   box-sizing: border-box;
   padding-bottom: 1rem;
-}
+  align-items: center;
 
-#header {
   text-align: start;
-
   h3 {
     margin: .5rem 0 .5rem 0;
   }

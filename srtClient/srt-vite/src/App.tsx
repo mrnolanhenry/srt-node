@@ -136,7 +136,7 @@ function App() {
           </div>
         </div>
         <div id="controlColumn" className="flex-column centered-column">
-          <div className="section-row flex-row full-width">
+          <div className="section-row flex-row spaced-between-row full-width">
             <div className="flex-column padded-column">
               <LineNumberControl 
                 lineStartInput={lineStartInput}

@@ -42,6 +42,7 @@
   float: left;
   /* padding: 0px 16px; */
   padding: 16px 16px 0 16px;
+  width: 65%;
 }
 
 /* Clear floats after the tab */

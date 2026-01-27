@@ -32,7 +32,7 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                     <button className={`input-container-tablinks ${activeTab === UPLOADED_FILES ? 'active' : ''}`} onClick={(event) => setActiveTab(UPLOADED_FILES)}>Uploaded Files</button>
                 </div>
             </div>
-            <div className="flex-row tab-content-row">
+            <div className="flex-row input-tab-content-row">
                 <div className="flex-column full-width">
                     <div id="inputSubtitles" className={`input-container-tabcontent padded-container ${activeTab === INPUT_SUBTITLES ? '' : 'hidden'}`}>
                         <div className="inner-tabcontent-container">

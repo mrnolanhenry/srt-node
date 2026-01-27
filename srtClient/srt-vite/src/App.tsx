@@ -7,7 +7,7 @@ import SubtitleConverter from './components/SubtitleConverter/SubtitleConverter'
 import TimeUtils from './utilities/TimeUtils';
 import Time from './classes/Time';
 import InputContainer from './components/InputContainer/InputContainer';
-import CopyTextArea from './components/CopyTextArea/CopyTextArea';
+import OutputContainer from './components/OutputContainer/OutputContainer';
 
 function App() {
   // TODO: Consider making textInputs a single string vs. string[]
@@ -103,24 +103,6 @@ function App() {
     }
   };
 
-  const handleDownload = () => {
-    const filename = 'output.srt';
-    downloadTextFile({name: filename, content: textOutput});
-  };
-
-  const downloadTextFile = (file: FileContent) => {
-    const { name, content } = file;
-    const blob = new Blob([content as BlobPart], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-}
-
   return (
     <>
       <div className="flex-wrapper">
@@ -143,16 +125,10 @@ function App() {
               />
             </div>
             <div id="outputContainerColumn" className="flex-column padded-column">
-
-              <CopyTextArea 
-                className="full-width no-resize" 
-                cols={50} 
-                id="srtOutput"
-                rows={14} 
-                onChange={handleTextOutputChange} 
-                value={textOutput}
-                />
-              <button id="btnDownload" onClick={handleDownload}>Download</button>
+              <OutputContainer
+                  textOutput={textOutput}
+                  handleTextOutputChange={handleTextOutputChange}
+              />
             </div>
           </div>
         </div>

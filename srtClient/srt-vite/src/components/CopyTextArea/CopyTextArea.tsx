@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './CopyTextArea.css';
+import CopyTextButton from '../CopyTextButton/CopyTextButton';
 
 interface CopyTextAreaProps {
   className: string;
@@ -48,6 +49,10 @@ const CopyTextArea = ({ className, cols, id, isReadOnly, rows, value, onChange }
             <span className="copy-text-character">{COPY_CHARACTER}</span>
           </span>
         </div>
+        <CopyTextButton
+          id="copyTextButton"
+          value={value}
+        />
       </div>
     </div>
   );

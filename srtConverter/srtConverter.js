@@ -55,7 +55,6 @@ const offsetData = (dataArr, offset) => {
   return array.join("\n");
 }
 
-//WIP!!
 const scrubNonDialogue = (line, startChar, endChar) => {
   let newLine = line;
   const startSearch = line.indexOf(startChar);
@@ -82,7 +81,7 @@ const scrubNonDialogue = (line, startChar, endChar) => {
     }
   }
   return newLine;
-}
+};
 
 const isLineNumber = (line) => {
   return !isNaN(Number(line)) && !isNaN(parseInt(line)) && line.indexOf(".") !== line.length - 1;

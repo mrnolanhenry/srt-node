@@ -92,7 +92,7 @@ textarea.no-resize {
 }
 
 .section-row {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 #inputContainerColumn {
@@ -103,9 +103,8 @@ textarea.no-resize {
   width: 50%;
 }
 
-#controlColumn,
-#convertColumn {
-  width:50%;
+#controlColumn {
+  width: 50%;
 }
 
 #headerRow {

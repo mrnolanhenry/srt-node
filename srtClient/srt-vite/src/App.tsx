@@ -3,20 +3,22 @@ import './App.css';
 import type { FileContent } from './interfaces/FileContent';
 import TimeControl from './components/TimeControl/TimeControl';
 import LineNumberControl from './components/LineNumberControl/LineNumberControl';
-import SubtitleConverter from './components/SubtitleConverter/SubtitleConverter';
+import SubtitleFixer from './components/SubtitleFixer/SubtitleFixer';
 import TimeUtils from './utilities/TimeUtils';
 import Time from './classes/Time';
 import InputContainer from './components/InputContainer/InputContainer';
 import OutputContainer from './components/OutputContainer/OutputContainer';
+import StickyFooter from './components/StickyFooter/StickyFooter';
 
 function App() {
-  // TODO: Consider making textInputs a single string vs. string[]
-  const [textInputs, setTextInputs] = useState<string[]>([
-    `Update timecodes on existing .srt files with ease!
+  const INSTRUCTIONS_TEXT = `Update timecodes on existing .srt files with ease!
     \nEnter your subtitles here or upload multiple .srt files using the button below.
     \nBy default, the contents of the first file uploaded will appear here.
-    \nClick the 'Uploaded Files' tab above to work with your other files.`]);
-  const [textOutput, setTextOutput] = useState<string>('Your converted .srt file with new timecodes will appear here.');
+    \nClick the 'Uploaded Files' tab above to work with your other files.
+    \nThen fill in the fields below to adjust the timecodes on specific line numbers.`;
+  // TODO: Consider making textInputs a single string vs. string[]
+  const [textInputs, setTextInputs] = useState<string[]>([INSTRUCTIONS_TEXT]);
+  const [textOutput, setTextOutput] = useState<string>('Your fixed .srt file with new timecodes will appear here.');
   const [fileContents, setFileContents] = useState<FileContent[]>([]);
   const [lineStartInput, setLineStartInput] = useState<number>(1);
   const [lineStopInput, setLineStopInput] = useState<number | null>(null);
@@ -109,68 +111,68 @@ function App() {
 
   return (
     <>
-      <div className="flex-wrapper">
-        <div className="flex-column full-width centered-column padded-column">
-          <div id="headerRow" className="flex-row section-row">
-            <div className="flex-column">
-              <h3>Convert Subtitles</h3>
+      <div id="appContainer">
+        <div id="mainContent">
+          <div className="flex-column full-width centered-column padded-column">
+            <div id="headerRow" className="flex-row section-row">
+              <div className="flex-column">
+                <h3>Fix Subtitles</h3>
+              </div>
+            </div>
+          </div>
+          <div className="flex-column full-width centered-column">
+            <div className="flex-row section-row">
+              <div id="inputContainerColumn"className="flex-column padded-column">
+                <InputContainer
+                  fileContents={fileContents} 
+                  textInputs={textInputs}
+                  handleTextInputChange={handleTextInputChange}
+                  setFileContents={setFileContents} 
+                />
+              </div>
+              <div id="outputContainerColumn" className="flex-column padded-column">
+                <OutputContainer
+                    textOutput={textOutput}
+                    handleTextOutputChange={handleTextOutputChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div id="controlColumn" className="flex-column centered-column">
+            <div className="section-row flex-row spaced-between-row full-width">
+              <div className="flex-column padded-column">
+                <LineNumberControl 
+                  lineStartInput={lineStartInput}
+                  lineStopInput={lineStopInput}
+                  handleLineStartInputChange={handleLineStartInputChange}
+                  handleLineStopInputChange={handleLineStopInputChange}
+                />
+              </div>
+              <div className="flex-column padded-column">
+                <TimeControl 
+                  timeInput={timeInput}
+                  lineStartInput={lineStartInput}
+                  handleHoursChange={handleHoursChange}
+                  handleMinutesChange={handleMinutesChange}
+                  handleSecondsChange={handleSecondsChange}
+                  handleMillisecondsChange={handleMillisecondsChange}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex-column full-width centered-column">
-          <div className="flex-row section-row">
-            <div id="inputContainerColumn"className="flex-column padded-column">
-              <InputContainer
-                fileContents={fileContents} 
-                textInputs={textInputs}
-                handleTextInputChange={handleTextInputChange}
-                setFileContents={setFileContents} 
-              />
-            </div>
-            <div id="outputContainerColumn" className="flex-column padded-column">
-              <OutputContainer
-                  textOutput={textOutput}
-                  handleTextOutputChange={handleTextOutputChange}
-              />
-            </div>
+        <StickyFooter>
+          <div className="flex-row centered-row padded-row">
+            <SubtitleFixer 
+              lineStartInput={lineStartInput}
+              lineStopInput={lineStopInput}
+              shouldScrubNonDialogue={shouldScrubNonDialogue}
+              timeInputString={TimeUtils.getDisplayTime(timeInput)}
+              textInput={textInputs[0]}
+              handleFixCallback={setTextOutput}
+            />
           </div>
-        </div>
-        <div id="controlColumn" className="flex-column centered-column">
-          <div className="section-row flex-row spaced-between-row full-width">
-            <div className="flex-column padded-column">
-              <LineNumberControl 
-                lineStartInput={lineStartInput}
-                lineStopInput={lineStopInput}
-                handleLineStartInputChange={handleLineStartInputChange}
-                handleLineStopInputChange={handleLineStopInputChange}
-              />
-            </div>
-            <div className="flex-column padded-column">
-              <TimeControl 
-                timeInput={timeInput}
-                lineStartInput={lineStartInput}
-                handleHoursChange={handleHoursChange}
-                handleMinutesChange={handleMinutesChange}
-                handleSecondsChange={handleSecondsChange}
-                handleMillisecondsChange={handleMillisecondsChange}
-              />
-            </div>
-          </div>
-        </div>
-        <div id="convertColumn" className="flex-column centered-column">
-          <div className="section-row flex-row full-width">
-            <div className="flex-column full-width padded-column">
-              <SubtitleConverter 
-                lineStartInput={lineStartInput}
-                lineStopInput={lineStopInput}
-                shouldScrubNonDialogue={shouldScrubNonDialogue}
-                timeInputString={TimeUtils.getDisplayTime(timeInput)}
-                textInput={textInputs[0]}
-                handleConvertCallback={setTextOutput}
-              />
-            </div>
-          </div>
-        </div>
+        </StickyFooter>
       </div>
     </>
   )

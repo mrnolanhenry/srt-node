@@ -2,19 +2,19 @@ import Time from '../classes/Time';
 
 abstract class TimeUtils { 
 
-  static getNewTimeWithHours(time: Time, hrs: number) { 
+  static getNewTimeWithHours(time: Time, hrs: number): Time { 
     return new Time(hrs, time.getUTCMinutes(), time.getUTCSeconds(), time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithMinutes(time: Time, mins: number) { 
+  static getNewTimeWithMinutes(time: Time, mins: number): Time { 
     return new Time(time.getUTCHours(), mins, time.getUTCSeconds(), time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithSeconds(time: Time, secs: number) { 
+  static getNewTimeWithSeconds(time: Time, secs: number): Time { 
     return new Time(time.getUTCHours(), time.getUTCMinutes(), secs, time.getUTCMilliseconds());
   }
 
-  static getNewTimeWithMilliseconds(time: Time, millisecs: number) { 
+  static getNewTimeWithMilliseconds(time: Time, millisecs: number): Time { 
     return new Time(time.getUTCHours(), time.getUTCMinutes(), time.getUTCSeconds(), millisecs);
   }
 

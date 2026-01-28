@@ -35,7 +35,7 @@ const OutputContainer = ({ textOutput, handleTextOutputChange }: OutputContainer
         <>
             <div className="flex-row">
                 <div className="output-container-tab">
-                    <button className={`output-container-tablinks ${activeTab === OUTPUT_SUBTITLES ? 'active' : ''}`} onClick={(event) => setActiveTab(OUTPUT_SUBTITLES)}>Converted Subtitles</button>
+                    <button className={`output-container-tablinks ${activeTab === OUTPUT_SUBTITLES ? 'active' : ''}`} onClick={(event) => setActiveTab(OUTPUT_SUBTITLES)}>Fixed Subtitles</button>
                 </div>
             </div>
             <div className="flex-row output-tab-content-row">

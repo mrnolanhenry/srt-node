@@ -1,24 +1,24 @@
 import StringUtils from "../../utilities/StringUtils";
 import TimeUtils from "../../utilities/TimeUtils";
 
-interface SubtitleConverterProps {
+interface SubtitleFixerProps {
   lineStartInput: number;
   lineStopInput: number | null;
   shouldScrubNonDialogue: boolean;
   timeInputString: string;
   textInput: string;
-  handleConvertCallback: (convertedText: string) => void;
+  handleFixCallback: (fixedText: string) => void;
 }
 
-const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialogue, timeInputString, textInput, handleConvertCallback }: SubtitleConverterProps) => {
-  const handleConvert = (): void => {
+const SubtitleFixer = ({ lineStartInput, lineStopInput, shouldScrubNonDialogue, timeInputString, textInput, handleFixCallback }: SubtitleFixerProps) => {
+  const handleFix = (): void => {
       const lines = textInput.split("\n");
       const offset = getOffsetAmount(lines);
       if (isNaN(offset)) {
         return console.error('invalid offset amount from current time');
       }
       const newData = sequenceLineNumbers(offsetAndScrubSubtitles(lines,offset));
-      handleConvertCallback(newData);
+      handleFixCallback(newData);
   };
   
   const offsetAndScrubSubtitles = (lines: string[], offset: number): string[] => {
@@ -81,7 +81,7 @@ const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialog
   };
   
   //TODO: test this function thoroughly - was described as a WIP previously
-  const scrubNonDialogue = (line: string, startChar:string, endChar: string): string => {
+  const scrubNonDialogue = (line: string, startChar: string, endChar: string): string => {
     let newLine = line;
     const startSearch = line.indexOf(startChar);
     const endSearch = line.indexOf(endChar);
@@ -126,15 +126,15 @@ const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialog
     // e.g. 00:01:49,111 - 00:01:19,111 would return an offset of -00:00:30,000 and all following times in srt would get modified by this amount.
     const newInitialString = timeInputString;
     const lineNumberToStartOffset = lineStartInput;
-    console.log('new time: ' + newInitialString);
-    console.log('line number to start offset: ' + lineNumberToStartOffset);
+    // console.log('new time: ' + newInitialString);
+    // console.log('line number to start offset: ' + lineNumberToStartOffset);
     const firstLineToOffset = getFirstTimeLineToOffset(dataArr,lineNumberToStartOffset);
-    console.log('firstLineToOffset', firstLineToOffset);
+    // console.log('firstLineToOffset', firstLineToOffset);
     const oldInitialString = getInitialTimeString(firstLineToOffset as string) as string;
     const oldInitialTime = TimeUtils.convertStringToMillisecs(oldInitialString) as number;
     const newInitialTime = TimeUtils.convertStringToMillisecs(newInitialString) as number;
-    console.log('newInitialTime',newInitialTime);
-    console.log('offset',newInitialTime - oldInitialTime);
+    // console.log('newInitialTime',newInitialTime);
+    // console.log('offset',newInitialTime - oldInitialTime);
     
     return newInitialTime - oldInitialTime;
   };
@@ -148,38 +148,38 @@ const SubtitleConverter = ({ lineStartInput, lineStopInput, shouldScrubNonDialog
   
   const getFirstTimeLineToOffset = (dataArray: string[],lineNumberToStartOffset : number): string | undefined => {
     return dataArray.find((line: string, index: number, array: string[]) => {
-      console.log("getFirstTimeLineToOffset index");
-      console.log(index);
-      console.log("getFirstTimeLineToOffset index");
-      console.log(index);
-      console.log("getFirstTimeLineToOffset array");
-      console.log(array);
-      console.log("getFirstTimeLineToOffset lineNumberToStartOffset");
-      console.log(lineNumberToStartOffset);
+      // console.log("getFirstTimeLineToOffset index");
+      // console.log(index);
+      // console.log("getFirstTimeLineToOffset index");
+      // console.log(index);
+      // console.log("getFirstTimeLineToOffset array");
+      // console.log(array);
+      // console.log("getFirstTimeLineToOffset lineNumberToStartOffset");
+      // console.log(lineNumberToStartOffset);
       if (index === 0) {
         return false;
       }
-      console.log("getFirstTimeLineToOffset array[index - 1]");
-      console.log(array[index - 1]);
+      // console.log("getFirstTimeLineToOffset array[index - 1]");
+      // console.log(array[index - 1]);
       let prevLine = StringUtils.removeReturnCharacter(array[index - 1]);
-      console.log("getFirstTimeLineToOffset prevLine");
-      console.log(prevLine);
-      console.log("------------------------------------------------------------------");
+      // console.log("getFirstTimeLineToOffset prevLine");
+      // console.log(prevLine);
+      // console.log("------------------------------------------------------------------");
       return StringUtils.isLineNumber(prevLine) && (Number(prevLine) >= lineNumberToStartOffset) && line.includes(" --> ");
     });
   };
   
   const getInitialTimeString = (firstLine: string): string | undefined => {
     const oldInitialString = firstLine.split(" --> ").shift();
-    console.log('old time at that line: ' + oldInitialString);
+    // console.log('old time at that line: ' + oldInitialString);
     return oldInitialString;
   };
   
   return (
     <>
-      <button id="btnConvert" onClick={handleConvert}>Convert</button>
+      <button id="btnFix" onClick={handleFix}>Fix</button>
     </>
   );
 };
 
-export default SubtitleConverter;
+export default SubtitleFixer;

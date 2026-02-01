@@ -1,4 +1,7 @@
-# React + TypeScript + Vite
+# srt-client
+A React/Typescript client version to make use of the functionality of srt-converter in a more readable UI.
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

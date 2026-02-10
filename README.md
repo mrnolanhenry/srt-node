@@ -13,6 +13,3 @@ If you only need to edit one line, manually editing an SRT file is easier, but l
 
 ## srt-cropper
 Use this to get a new SRT file that only consists of lines x through y. Mainly useful for very large SRT files that literally take minutes to scroll through in Notepad++, for instance.
-
-## srt-client
-A React/Typescript client version to make use of the functionality of srt-converter in a more readable UI.

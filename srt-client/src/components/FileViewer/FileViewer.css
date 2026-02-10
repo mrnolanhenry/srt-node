@@ -32,6 +32,7 @@
 
 .file-viewer-tablinks {
   font-size: 14px;
+  font-style: italic;
 }
 
 /* Style the tab content */
@@ -51,6 +52,9 @@
 
 .file-upload-wrapped-button {
   border-width: 3px;
+  border-bottom: 1px;
+  border-style: solid;
+  font-style: normal;
 }
 
 .file-upload-wrapped-button:hover {
@@ -64,8 +68,4 @@
   font-size: 14px;
   width: 100%;
   display: inline-block;
-}
-
-#fileUploadColumn {
-  flex-grow: 1; 
 }

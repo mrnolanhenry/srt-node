@@ -28,7 +28,7 @@ const OutputContainer = ({ textOutput, handleTextOutputChange }: OutputContainer
                                     className="full-width no-resize" 
                                     cols={50} 
                                     id="srtOutput"
-                                    rows={14} 
+                                    rows={23} 
                                     onChange={handleTextOutputChange} 
                                     value={textOutput}
                                 />             

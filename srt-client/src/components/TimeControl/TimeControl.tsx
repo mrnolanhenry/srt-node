@@ -1,4 +1,3 @@
-import TimeUtils from '../../utilities/TimeUtils';
 import './TimeControl.css';
 
 interface TimeControlProps {
@@ -10,7 +9,7 @@ interface TimeControlProps {
   handleMillisecondsChange: (event: any) => void;
 }
 
-const TimeControl = ({ timeInput, lineStartInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
+const TimeControl = ({ timeInput, handleHoursChange, handleMinutesChange, handleSecondsChange, handleMillisecondsChange }: TimeControlProps) => {
 
   return (
     <>
@@ -50,14 +49,6 @@ const TimeControl = ({ timeInput, lineStartInput, handleHoursChange, handleMinut
             <div className="flex-row">
               <input type="number" id="millisecondsInput" name="millisecondsInput" min={0} max={999} step={1} size={3} onChange={handleMillisecondsChange} value={timeInput.getUTCMilliseconds()} />
             </div>
-          </div>
-        </div>
-        <div className="flex-row centered-row">
-          <div className="flex-column">
-            <p>Selected New Time for Line {lineStartInput}:
-              <br />
-              {TimeUtils.getDisplayTime(timeInput)}
-            </p>
           </div>
         </div>
       </div>

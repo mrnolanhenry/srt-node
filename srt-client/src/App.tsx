@@ -156,32 +156,43 @@ function App() {
               </div>
             </div>
           </div>
-          <div id="controlColumn" className="flex-column centered-column">
-            <div className="section-row flex-row spaced-between-row full-width">
-              <div className="flex-column padded-column">
-                <LineNumberControl 
-                  lineStartInput={lineStartInput}
-                  lineStopInput={lineStopInput}
-                  handleLineStartInputChange={handleLineStartInputChange}
-                  handleLineStopInputChange={handleLineStopInputChange}
-                />
-              </div>
-              <div className="flex-column padded-column">
-                <TimeControl 
-                  timeInput={timeInput}
-                  lineStartInput={lineStartInput}
-                  handleHoursChange={handleHoursChange}
-                  handleMinutesChange={handleMinutesChange}
-                  handleSecondsChange={handleSecondsChange}
-                  handleMillisecondsChange={handleMillisecondsChange}
-                />
-              </div>
-            </div>
-          </div>
           <div id="footerSpacer">
           </div>
         </div>
         <StickyFooter>
+          <div id="controlRow"className="flex-row">
+            <div id="controlColumn" className="flex-column centered-column">
+              <div className="section-row flex-row spaced-between-row full-width">
+                <div className="flex-column padded-column">
+                  <LineNumberControl 
+                    lineStartInput={lineStartInput}
+                    lineStopInput={lineStopInput}
+                    handleLineStartInputChange={handleLineStartInputChange}
+                    handleLineStopInputChange={handleLineStopInputChange}
+                  />
+                </div>
+                <div className="flex-column padded-column">
+                  <TimeControl 
+                    timeInput={timeInput}
+                    lineStartInput={lineStartInput}
+                    handleHoursChange={handleHoursChange}
+                    handleMinutesChange={handleMinutesChange}
+                    handleSecondsChange={handleSecondsChange}
+                    handleMillisecondsChange={handleMillisecondsChange}
+                  />
+                </div>
+              </div>
+              <div className="flex-row centered-row full-width">
+                <div className="flex-column padded-column">
+                  <div className="flex-row centered-row">
+                    <div className="flex-column">
+                      <span>Selected New Time for Line {lineStartInput}: {TimeUtils.getDisplayTime(timeInput)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="flex-row spaced-around-row padded-row">
             <div className="flex-column">
               <div className="flex-row">

@@ -35,10 +35,7 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
         <div className="inner-tabcontent-container">
           <div className="flex-row">
             <div className="flex-column file-viewer-tab">
-              {fileContents.map((file, index) => (
-                <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={() => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
-              ))}
-              <div id="fileUploadColumn" className="flex-column flex-end-column">
+              <div id="fileUploadColumn" className="flex-column">
                 <button className="file-viewer-tablinks file-upload-wrapped-button">
                   <FileUpload 
                       fileContents={fileContents} 
@@ -47,6 +44,9 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
                   />
                 </button>
               </div>
+              {fileContents.map((file, index) => (
+                <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={() => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
+              ))}
             </div>
             {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
@@ -55,7 +55,7 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
                   cols={50} 
                   id={file.name}
                   isReadOnly={true}
-                  rows={14} 
+                  rows={23} 
                   onChange={() => {
                     // TODO: Ultimately want a function here and for each file's contents to not be readOnly
                   }} 

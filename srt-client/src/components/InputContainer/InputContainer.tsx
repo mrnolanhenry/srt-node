@@ -40,7 +40,7 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                                     className="full-width no-resize" 
                                     cols={50} 
                                     id="srtInputDisplay"
-                                    rows={14} 
+                                    rows={23} 
                                     onChange={handleTextInputChange} 
                                     value={textInputs[0]}
                                 />              

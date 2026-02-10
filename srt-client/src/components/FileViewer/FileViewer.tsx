@@ -12,6 +12,7 @@ interface FileViewerProps {
 const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => {
   // const [activeTab, setActiveTab] = useState<string>(fileContents && fileContents.length ? fileContents[0].name : "");
   const [activeTab, setActiveTab] = useState<string>("");
+  const uploadFilesLabel = fileContents.length === 0 ? "Upload Files" : "Upload More Files";
 
     useEffect(() => {
       // console.log('useEffect - fileInputs changed:');
@@ -33,10 +34,19 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
       {fileContents.length > 0 ? (
         <div className="inner-tabcontent-container">
           <div className="flex-row">
-            <div className="file-viewer-tab">
+            <div className="flex-column file-viewer-tab">
               {fileContents.map((file, index) => (
-                <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={(event) => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
+                <button key={`file-viewer-tablinks-${index}`} className={`file-viewer-tablinks ${activeTab === file.name ? 'active' : ''}`} onMouseOver={() => setActiveTab(file.name)}>{getAbbreviatedFileName(file.name, 20)}</button>
               ))}
+              <div id="fileUploadColumn" className="flex-column flex-end-column">
+                <button className="file-viewer-tablinks file-upload-wrapped-button">
+                  <FileUpload 
+                      fileContents={fileContents} 
+                      label={uploadFilesLabel}
+                      handleUploadCallback={handleUploadCallback} 
+                  />
+                </button>
+              </div>
             </div>
             {fileContents.map((file, index) => (
               <div key={`file-viewer-tabContent-${index}`} id={`file-viewer-tabContent-${file.name}`} className={`file-viewer-tabcontent ${activeTab === file.name ? '' : 'hidden'}`}>
@@ -46,19 +56,13 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
                   id={file.name}
                   isReadOnly={true}
                   rows={14} 
-                  onChange={(event) => {
+                  onChange={() => {
                     // TODO: Ultimately want a function here and for each file's contents to not be readOnly
                   }} 
                   value={(file.content as string) ?? ""}
                 /> 
               </div>      
             ))}
-          </div>
-          <div id="uploadMoreFilesRow" className="flex-row padded-row">
-              <FileUpload 
-                  fileContents={fileContents} 
-                  handleUploadCallback={handleUploadCallback} 
-              />
           </div>
           <div className="clearfix"></div>
         </div>
@@ -67,6 +71,7 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
           <div className="flex-row padded-row">
               <FileUpload 
                   fileContents={fileContents} 
+                  label={uploadFilesLabel}
                   handleUploadCallback={handleUploadCallback} 
               />
           </div>

@@ -15,7 +15,7 @@ function App() {
     \nEnter your subtitles here or upload multiple .srt files using the button below.
     \nBy default, the contents of the first file uploaded will appear here.
     \nClick the 'Uploaded Files' tab above to work with your other files.
-    \nThen fill in the fields below to adjust the timecodes on specific line numbers.`;
+    \nThen fill in the fields below to adjust the timecodes on specific line numbers and click the 'Fix' button.`;
   // TODO: Consider making textInputs a single string vs. string[]
   const [textInputs, setTextInputs] = useState<string[]>([INSTRUCTIONS_TEXT]);
   const [textOutput, setTextOutput] = useState<string>('Your fixed .srt file with new timecodes will appear here.');
@@ -109,6 +109,24 @@ function App() {
     }
   };
 
+    const handleDownload = () => {
+      const filename = 'output.srt';
+      downloadTextFile({name: filename, content: textOutput});
+    };
+
+    const downloadTextFile = (file: FileContent) => {
+      const { name, content } = file;
+      const blob = new Blob([content as BlobPart], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    };
+
   return (
     <>
       <div id="appContainer">
@@ -160,17 +178,28 @@ function App() {
               </div>
             </div>
           </div>
+          <div id="footerSpacer">
+          </div>
         </div>
         <StickyFooter>
-          <div className="flex-row centered-row padded-row">
-            <SubtitleFixer 
-              lineStartInput={lineStartInput}
-              lineStopInput={lineStopInput}
-              shouldScrubNonDialogue={shouldScrubNonDialogue}
-              timeInputString={TimeUtils.getDisplayTime(timeInput)}
-              textInput={textInputs[0]}
-              handleFixCallback={setTextOutput}
-            />
+          <div className="flex-row spaced-around-row padded-row">
+            <div className="flex-column">
+              <div className="flex-row">
+                <SubtitleFixer 
+                  lineStartInput={lineStartInput}
+                  lineStopInput={lineStopInput}
+                  shouldScrubNonDialogue={shouldScrubNonDialogue}
+                  timeInputString={TimeUtils.getDisplayTime(timeInput)}
+                  textInput={textInputs[0]}
+                  handleFixCallback={setTextOutput}
+                />
+              </div>
+            </div>
+            <div className="flex-column">
+              <div className="flex-row">
+                <button id="btnDownload" onClick={handleDownload}>Download</button> 
+              </div>
+            </div>
           </div>
         </StickyFooter>
       </div>

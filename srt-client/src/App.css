@@ -6,6 +6,14 @@
   text-align: center;
 }
 
+#mainContent {
+  height: calc(100vh - 60px);
+}
+
+#footerSpacer {
+  margin-bottom: 60px; /* Height of the sticky footer */
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -36,6 +44,10 @@
   justify-content: space-between;
 }
 
+.spaced-around-row {
+  justify-content: space-around;
+}
+
 .centered-column {
   justify-content: center;
 }
@@ -50,6 +62,10 @@
   text-align: start;
 }
 
+.flex-end-column {
+  justify-content: flex-end;
+}
+
 h4 {
   margin: .5rem 0;
 }
@@ -60,6 +76,16 @@ p {
 
 small {
   font-size: 11px;
+}
+
+button,
+input[type=button] {
+  border-style: solid;
+  box-sizing: border-box;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+  outline: none;
 }
 
 input[type=number] {
@@ -120,4 +146,14 @@ textarea.no-resize {
   small {
     font-size: 12px;
   }
+}
+
+#btnDownload {
+    background-color: color-mix(in oklab, rgba(155, 157, 103, 1) 75%, black);
+    border: 1px solid color-mix(in oklab, rgba(155, 157, 103, 1) 75%, black);
+}
+
+#btnDownload:hover {
+    background-color: color-mix(in oklab, rgba(155, 157, 103, 1) 90%, black);
+    border-color: color-mix(in oklab, rgba(155, 157, 103, 1) 90%, black);
 }

@@ -1,6 +1,5 @@
 import type { FileContent } from '../../interfaces/FileContent';
 import './InputContainer.css';
-import FileUpload from '../FileUpload/FileUpload';
 import FileViewer from '../FileViewer/FileViewer';
 import { useState } from 'react';
 import CopyTextArea from '../CopyTextArea/CopyTextArea';
@@ -28,8 +27,8 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
         <>
             <div className="flex-row">
                 <div className="input-container-tab">
-                    <button className={`input-container-tablinks ${activeTab === INPUT_SUBTITLES ? 'active' : ''}`} onClick={(event) => setActiveTab(INPUT_SUBTITLES)}>Edit Subtitles</button>
-                    <button className={`input-container-tablinks ${activeTab === UPLOADED_FILES ? 'active' : ''}`} onClick={(event) => setActiveTab(UPLOADED_FILES)}>Uploaded Files</button>
+                    <button className={`input-container-tablinks ${activeTab === INPUT_SUBTITLES ? 'active' : ''}`} onClick={() => setActiveTab(INPUT_SUBTITLES)}>Edit Subtitles</button>
+                    <button className={`input-container-tablinks ${activeTab === UPLOADED_FILES ? 'active' : ''}`} onClick={() => setActiveTab(UPLOADED_FILES)}>Uploaded Files</button>
                 </div>
             </div>
             <div className="flex-row input-tab-content-row">
@@ -45,12 +44,6 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                                     onChange={handleTextInputChange} 
                                     value={textInputs[0]}
                                 />              
-                            </div>
-                            <div className="flex-row padded-row">
-                                <FileUpload 
-                                    fileContents={fileContents} 
-                                    handleUploadCallback={handleUploadCallback} 
-                                />
                             </div>
                         </div>
                     </div>

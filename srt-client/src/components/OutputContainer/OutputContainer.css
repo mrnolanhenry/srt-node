@@ -4,7 +4,7 @@
   height: 300px;
   box-sizing: border-box;
   border-radius: 0 8px 8px 8px;
-  background-color: #9b9d67;
+  background-color: rgba(155, 157, 103, 1);
 }
 
 .output-container-tab {
@@ -12,26 +12,23 @@
 }
 
 .output-container-tab button {
-    background-color: #9b9d67;
+    background-color: rgba(155, 157, 103, 1);
     float: left;
-    border: 1px solid #9b9d67;
+    border: 1px solid rgba(155, 157, 103, 1);
     -moz-border-radius: 0px;
     -webkit-border-radius: 8px 8px 0px 0px;
     border-radius: 8px 8px 0px 0px;
     outline: none;
-    cursor: pointer;
-    color: white;
-    transition: 0.3s;
 }
 
 .output-container-tab button:hover {
-  background-color: #9b9d67;
-  border-color: #9b9d67;
+  background-color: rgba(155, 157, 103, 1);
+  border-color: rgba(155, 157, 103, 1);
 }
 
 .output-container-tab button.active {
-  background-color: #9b9d67;
-  border-color: #9b9d67;
+  background-color: rgba(155, 157, 103, 1);
+  border-color: rgba(155, 157, 103, 1);
 }
 
 .output-container-tabcontent {

@@ -11,8 +11,3 @@
     background-color: rgba(0, 0, 0, .3);
     backdrop-filter: blur(2px);
 }
-
-/* Add padding to the body or a main wrapper to prevent content from being hidden behind the fixed footer */
-body {
-  margin-bottom: 60px; /* Adjust this value to match your footer's height */
-}

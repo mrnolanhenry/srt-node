@@ -18,7 +18,8 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
     const [activeTab, setActiveTab] = useState<string>(INPUT_SUBTITLES);
 
     const handleUploadCallback = (contents: FileContent[]) => {
-        setFileContents(contents);
+        // Add new files rather than replace them.
+        setFileContents([...fileContents, ...contents]);
         // OPTIONAL - show Uploaded Files tab after uploading file(s)
         // setActiveTab(UPLOADED_FILES);
     }

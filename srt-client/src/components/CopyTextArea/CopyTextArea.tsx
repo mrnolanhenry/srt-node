@@ -8,11 +8,13 @@ interface CopyTextAreaProps {
   id: string;
   isReadOnly?: boolean;
   rows: number;
+  scrollRef?: React.RefObject<HTMLTextAreaElement>;
   value: string;
   onChange: (event: any) => void;
+  onScroll?: (event: any) => void;
 }
 
-const CopyTextArea = ({ className, cols, id, isReadOnly, rows, value, onChange }: CopyTextAreaProps) => {
+const CopyTextArea = ({ className, cols, id, isReadOnly, rows, scrollRef, value, onChange, onScroll }: CopyTextAreaProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const COPY_CHARACTER = '\u{1F5D0}';
@@ -36,9 +38,9 @@ const CopyTextArea = ({ className, cols, id, isReadOnly, rows, value, onChange }
     <div className="flex-column full-width">
       <div className="flex-row copy-text-row">
         { isReadOnly ? (
-          <textarea readOnly id={id} className={`${className} copy-text-area`} name={id} rows={rows} cols={cols} onChange={onChange} value={value}></textarea>
+          <textarea readOnly ref={scrollRef ?? null} id={id} className={`${className} copy-text-area`} name={id} rows={rows} cols={cols} onChange={onChange} onScroll={onScroll} value={value}></textarea>
         ) : (
-          <textarea id={id} className={`${className} copy-text-area`} name={id} rows={rows} cols={cols} onChange={onChange} value={value}></textarea>
+          <textarea ref={scrollRef ?? null} id={id} className={`${className} copy-text-area`} name={id} rows={rows} cols={cols} onChange={onChange} onScroll={onScroll} value={value}></textarea>
         )}
         <div className="copy-text-button" onClick={handleCopy}>
           <span className="copy-text-span">

@@ -4,12 +4,11 @@ import type { FileContent } from '../../interfaces/FileContent';
 import './FileUpload.css';
 
 interface FileUploadProps {
-  fileContents: FileContent[];
   label: string;
   handleUploadCallback: (event: any) => void;
 }
 
-const FileUpload = ({ fileContents, label, handleUploadCallback }: FileUploadProps) => {
+const FileUpload = ({ label, handleUploadCallback }: FileUploadProps) => {
   const handleFileChange = (event: BaseSyntheticEvent) => {
     const files = event.target.files as FileList;
     if (files && files.length > 0) {

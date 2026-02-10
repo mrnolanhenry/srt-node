@@ -6,12 +6,14 @@ import CopyTextArea from '../CopyTextArea/CopyTextArea';
 
 interface InputContainerProps {
   fileContents: FileContent[];
+  scrollRef: React.RefObject<HTMLTextAreaElement>;
   textInputs: string[];
+  handleScroll: (event: any) => void;
   handleTextInputChange: (event: any) => void;
   setFileContents: React.Dispatch<React.SetStateAction<FileContent[]>>;
 }
 
-const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFileContents }: InputContainerProps) => {
+const InputContainer = ({ fileContents, scrollRef, textInputs, handleScroll, handleTextInputChange, setFileContents }: InputContainerProps) => {
     const INPUT_SUBTITLES = "inputSubtitles";
     const UPLOADED_FILES = "uploadedFiles";
 
@@ -42,7 +44,9 @@ const InputContainer = ({ fileContents, textInputs, handleTextInputChange, setFi
                                     cols={50} 
                                     id="srtInputDisplay"
                                     rows={23} 
-                                    onChange={handleTextInputChange} 
+                                    onChange={handleTextInputChange}
+                                    onScroll={handleScroll}
+                                    scrollRef={scrollRef}
                                     value={textInputs[0]}
                                 />              
                             </div>

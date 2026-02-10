@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import type { FileContent } from './interfaces/FileContent';
 import TimeControl from './components/TimeControl/TimeControl';
@@ -25,6 +25,25 @@ function App() {
   const [timeInput, setTimeInput] = useState<Time>(new Time(0, 0, 0, 0));
 
   const shouldScrubNonDialogue = false;
+
+  const refInputTextArea = useRef<HTMLTextAreaElement>(null);
+  const refOutputTextArea = useRef<HTMLTextAreaElement>(null);
+
+  const handleScroll = (event: any) => {
+    const { scrollTop, scrollLeft } = event.target;
+    // Determine which textarea was scrolled and update the other one
+    if (event.target === refInputTextArea.current) {
+      if (refOutputTextArea.current) {
+        refOutputTextArea.current.scrollTop = scrollTop;
+        refOutputTextArea.current.scrollLeft = scrollLeft;
+      }
+    } else if (event.target === refOutputTextArea.current) {
+      if (refInputTextArea.current) {
+        refInputTextArea.current.scrollTop = scrollTop;
+        refInputTextArea.current.scrollLeft = scrollLeft;
+      }
+    }
+  };
 
   useEffect(() => {
     if (fileContents && fileContents.length) {
@@ -142,15 +161,19 @@ function App() {
             <div className="flex-row section-row">
               <div id="inputContainerColumn"className="flex-column padded-column">
                 <InputContainer
-                  fileContents={fileContents} 
+                  fileContents={fileContents}
+                  scrollRef={refInputTextArea as React.RefObject<HTMLTextAreaElement>}
                   textInputs={textInputs}
+                  handleScroll={handleScroll}
                   handleTextInputChange={handleTextInputChange}
                   setFileContents={setFileContents} 
                 />
               </div>
               <div id="outputContainerColumn" className="flex-column padded-column">
                 <OutputContainer
+                    scrollRef={refOutputTextArea as React.RefObject<HTMLTextAreaElement>}
                     textOutput={textOutput}
+                    handleScroll={handleScroll}
                     handleTextOutputChange={handleTextOutputChange}
                 />
               </div>

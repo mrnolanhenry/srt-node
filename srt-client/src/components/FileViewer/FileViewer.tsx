@@ -37,8 +37,7 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
             <div className="flex-column file-viewer-tab">
               <div id="fileUploadColumn" className="flex-column">
                 <button className="file-viewer-tablinks file-upload-wrapped-button">
-                  <FileUpload 
-                      fileContents={fileContents} 
+                  <FileUpload
                       label={uploadFilesLabel}
                       handleUploadCallback={handleUploadCallback} 
                   />
@@ -69,8 +68,7 @@ const FileViewer = ({ fileContents, handleUploadCallback }: FileViewerProps) => 
       ) : (
         <div className="inner-tabcontent-container padded-container">
           <div className="flex-row padded-row">
-              <FileUpload 
-                  fileContents={fileContents} 
+              <FileUpload
                   label={uploadFilesLabel}
                   handleUploadCallback={handleUploadCallback} 
               />

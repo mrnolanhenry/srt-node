@@ -3,11 +3,13 @@ import { useState } from 'react';
 import CopyTextArea from '../CopyTextArea/CopyTextArea';
 
 interface OutputContainerProps {
-  textOutput: string;
-  handleTextOutputChange: (event: any) => void;
+    scrollRef: React.RefObject<HTMLTextAreaElement>;
+    textOutput: string;
+    handleScroll: (event: any) => void;
+    handleTextOutputChange: (event: any) => void;
 }
 
-const OutputContainer = ({ textOutput, handleTextOutputChange }: OutputContainerProps) => {
+const OutputContainer = ({ scrollRef, textOutput, handleScroll, handleTextOutputChange }: OutputContainerProps) => {
     const OUTPUT_SUBTITLES = "outputSubtitles";
 
     const [activeTab, setActiveTab] = useState<string>(OUTPUT_SUBTITLES);
@@ -28,8 +30,10 @@ const OutputContainer = ({ textOutput, handleTextOutputChange }: OutputContainer
                                     className="full-width no-resize" 
                                     cols={50} 
                                     id="srtOutput"
-                                    rows={23} 
+                                    rows={23}
+                                    scrollRef={scrollRef}
                                     onChange={handleTextOutputChange} 
+                                    onScroll={handleScroll}
                                     value={textOutput}
                                 />             
                             </div>
